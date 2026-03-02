@@ -11,20 +11,57 @@ export default function Pagination({
   totalPages,
   baseUrl,
 }: PaginationProps) {
+  const pageRange = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
-    <nav aria-label="Pagination">
-      {currentPage > 1 && (
-        <Link href={`${baseUrl}?page=${currentPage - 1}`}>Previous</Link>
-      )}
+    <nav className="pagination" aria-label="Pagination">
+      <ul className="pagination__list">
+        {currentPage > 1 ? (
+          <li className="page-item">
+            <Link
+              href={`${baseUrl}?page=${currentPage - 1}`}
+              className="page-link previous arrows"
+            >
+              previous
+            </Link>
+          </li>
+        ) : (
+          <li className="page-item disabled">
+            <span className="page-link">previous</span>
+          </li>
+        )}
 
-      <span>
-        {' '}
-        Page {currentPage} of {totalPages}{' '}
-      </span>
+        {pageRange.map((page) =>
+          page === currentPage ? (
+            <li key={page} className="page-item active">
+              <span>
+                {page} <span className="sr-only">(current)</span>
+              </span>
+            </li>
+          ) : (
+            <li key={page} className="page-item">
+              <Link href={`${baseUrl}?page=${page}`} className="page-link">
+                {page}
+              </Link>
+            </li>
+          ),
+        )}
 
-      {currentPage < totalPages && (
-        <Link href={`${baseUrl}?page=${currentPage + 1}`}>Next</Link>
-      )}
+        {currentPage < totalPages ? (
+          <li className="page-item">
+            <Link
+              href={`${baseUrl}?page=${currentPage + 1}`}
+              className="page-link next arrows"
+            >
+              next
+            </Link>
+          </li>
+        ) : (
+          <li className="page-item disabled">
+            <span className="page-link">next</span>
+          </li>
+        )}
+      </ul>
     </nav>
   );
 }

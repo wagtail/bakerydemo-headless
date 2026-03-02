@@ -1,4 +1,5 @@
-import LocationCard from '@/components/LocationCard';
+import PictureCard from '@/components/cards/PictureCard';
+import HeaderIndex from '@/components/headers/HeaderIndex';
 import api from '@/lib/api';
 import type { locations } from '@/models';
 import type { PageComponentProps } from './types';
@@ -6,8 +7,7 @@ import type { PageComponentProps } from './types';
 export default async function LocationsIndexPage({
   page,
 }: PageComponentProps<locations.LocationsIndexPage>) {
-  // Get location pages that are children of the locations index page
-  const { items: locations } = page.id
+  const { items: locationItems } = page.id
     ? await api.getPages('locations.LocationPage', {
         child_of: page.id.toString(),
       })
@@ -15,20 +15,20 @@ export default async function LocationsIndexPage({
 
   return (
     <>
-      <section>
-        <h1>{page.title}</h1>
-        <p>{page.introduction}</p>
-      </section>
+      <HeaderIndex title={page.title} introduction={page.introduction} />
 
-      <section>
-        {locations.length > 0 ? (
-          locations.map((location) => (
-            <LocationCard key={location.id} location={location} />
-          ))
-        ) : (
-          <p>No locations found.</p>
-        )}
-      </section>
+      <div className="container">
+        <div className="location-list-page">
+          {locationItems.map((location) => (
+            <PictureCard
+              key={location.id}
+              url={location.meta.html_path}
+              title={location.title}
+              image={location.image!}
+            />
+          ))}
+        </div>
+      </div>
     </>
   );
 }

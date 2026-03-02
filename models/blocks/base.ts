@@ -29,6 +29,12 @@ const blockQuoteSchema = z.object({
   value: z.object({
     text: z.string(),
     attribute_name: z.string().optional(),
+    settings: z
+      .object({
+        theme: z.string().optional(),
+        text_size: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 

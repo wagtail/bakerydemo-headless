@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { getMenuItems } from '@/lib/menu';
 import { NavigationLinks } from './NavigationLinks';
 
@@ -6,12 +5,12 @@ export default async function Navigation() {
   const menuItems = await getMenuItems();
 
   return (
-    <header>
-      <Link href="#main">Skip to main content</Link>
-      <div>
-        <div>
-          <NavigationLinks menuItems={menuItems} />
-        </div>
+    <header className="header clearfix">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <div className="container">
+        <NavigationLinks menuItems={menuItems} />
       </div>
     </header>
   );

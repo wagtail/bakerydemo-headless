@@ -5,10 +5,23 @@ export default function BlockQuote({
 }: {
   block: blocks.BlockQuote;
 }) {
+  const theme = value.settings?.theme || '';
+  const textSize = value.settings?.text_size || '';
+
+  const className = [
+    'blockquote',
+    theme && `blockquote--${theme}`,
+    textSize && `blockquote--text-${textSize}`,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <blockquote>
-      <p>{value.text}</p>
-      <p>{value.attribute_name}</p>
+    <blockquote className={className}>
+      <p className="text">{value.text}</p>
+      {value.attribute_name && (
+        <p className="attribute-name">{value.attribute_name}</p>
+      )}
     </blockquote>
   );
 }

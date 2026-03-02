@@ -1,4 +1,5 @@
-import BreadCard from '@/components/BreadCard';
+import ListingCard from '@/components/cards/ListingCard';
+import HeaderIndex from '@/components/headers/HeaderIndex';
 import Pagination from '@/components/Pagination';
 import api from '@/lib/api';
 import type { breads } from '@/models';
@@ -17,7 +18,6 @@ export default async function BreadsIndexPage({
   const pageSize = 12;
   const offset = (currentPage - 1) * pageSize;
 
-  // Get bread pages that are children of the breads index page
   const { items: breads, meta } = page.id
     ? await api.getPages('breads.BreadPage', {
         child_of: page.id.toString(),
@@ -30,27 +30,43 @@ export default async function BreadsIndexPage({
 
   return (
     <>
-      <section>
-        <h1>{page.title}</h1>
-        <p>{page.introduction}</p>
-      </section>
+      <HeaderIndex title={page.title} introduction={page.introduction} />
 
-      <section>
-        {breads.length > 0 ? (
-          breads.map((bread) => <BreadCard key={bread.id} bread={bread} />)
-        ) : (
-          <p>No breads found.</p>
-        )}
-      </section>
+      <div className="container">
+        <ul className="bread-list">
+          {breads.map((bread) => (
+            <li key={bread.id}>
+              <ListingCard
+                url={bread.meta.html_path}
+                title={bread.title}
+                image={bread.image}
+                h2
+                meta={[
+                  ...(bread.origin
+                    ? [{ label: 'Origin', value: bread.origin.title }]
+                    : []),
+                  ...(bread.bread_type
+                    ? [{ label: 'Type', value: bread.bread_type.title }]
+                    : []),
+                ]}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {meta.total_count > pageSize && (
-        <section>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            baseUrl=""
-          />
-        </section>
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                baseUrl=""
+              />
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

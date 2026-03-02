@@ -7,68 +7,66 @@ export default async function FormPage({
 }: PageComponentProps<base.FormPage>) {
   return (
     <>
-      <section>
-        <h1>{page.title}</h1>
-        <BaseStreamBlock blocks={page.body} />
-      </section>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="index-header__title">{page.title}</h1>
+          </div>
+          <div className="col-md-8 index-header__body-introduction">
+            {page.body.length > 0 && <BaseStreamBlock blocks={page.body} />}
+          </div>
+        </div>
+      </div>
 
-      <section>
-        <form action={`/${page.meta.slug}`} method="POST">
-          {page.form_fields.map((field) => (
-            <div key={field.id}>
-              <label htmlFor={`id_${field.id}`}>
-                {field.label}
-                {field.required && <span aria-hidden="true">*</span>}
-              </label>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 form-page">
+            <form action={page.meta.html_path} method="POST">
+              {page.form_fields.map((field) => (
+                <div key={field.id} className="form-page__field">
+                  <label htmlFor={`id_${field.id}`}>
+                    {field.label}
+                    {field.required && <span className="required">*</span>}
+                  </label>
 
-              {field.help_text && (
-                <p id={`help_${field.id}`}>{field.help_text}</p>
-              )}
+                  {field.help_text && <p className="help">{field.help_text}</p>}
 
-              {field.field_type === 'select' ? (
-                <select
-                  id={`id_${field.id}`}
-                  name={`field_${field.id}`}
-                  required={field.required}
-                  aria-describedby={
-                    field.help_text ? `help_${field.id}` : undefined
-                  }
-                  defaultValue={field.default_value ?? ''}
-                >
-                  {field.choices?.map((choice) => (
-                    <option key={choice} value={choice}>
-                      {choice}
-                    </option>
-                  ))}
-                </select>
-              ) : field.field_type === 'textarea' ? (
-                <textarea
-                  id={`id_${field.id}`}
-                  name={`field_${field.id}`}
-                  required={field.required}
-                  aria-describedby={
-                    field.help_text ? `help_${field.id}` : undefined
-                  }
-                  defaultValue={field.default_value ?? ''}
-                />
-              ) : (
-                <input
-                  id={`id_${field.id}`}
-                  type={field.field_type}
-                  name={`field_${field.id}`}
-                  required={field.required}
-                  aria-describedby={
-                    field.help_text ? `help_${field.id}` : undefined
-                  }
-                  defaultValue={field.default_value ?? ''}
-                />
-              )}
-            </div>
-          ))}
-
-          <button type="submit">Submit</button>
-        </form>
-      </section>
+                  {field.field_type === 'select' ? (
+                    <select
+                      id={`id_${field.id}`}
+                      name={field.label}
+                      required={field.required}
+                      defaultValue={field.default_value || ''}
+                    >
+                      {field.choices?.map((choice) => (
+                        <option key={choice} value={choice}>
+                          {choice}
+                        </option>
+                      ))}
+                    </select>
+                  ) : field.field_type === 'textarea' ? (
+                    <textarea
+                      id={`id_${field.id}`}
+                      name={field.label}
+                      required={field.required}
+                      defaultValue={field.default_value || ''}
+                    />
+                  ) : (
+                    <input
+                      id={`id_${field.id}`}
+                      type={field.field_type === 'email' ? 'email' : 'text'}
+                      name={field.label}
+                      required={field.required}
+                      defaultValue={field.default_value || ''}
+                    />
+                  )}
+                </div>
+              ))}
+              <input type="submit" />
+            </form>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

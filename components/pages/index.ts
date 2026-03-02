@@ -9,6 +9,8 @@ import GalleryPage from './GalleryPage';
 import HomePage from './HomePage';
 import LocationPage from './LocationPage';
 import LocationsIndexPage from './LocationsIndexPage';
+import PeopleIndexPage from './PeopleIndexPage';
+import PersonPage from './PersonPage';
 import RecipeIndexPage from './RecipeIndexPage';
 import RecipePage from './RecipePage';
 import StandardPage from './StandardPage';
@@ -27,6 +29,8 @@ const pageComponents = {
   'breads.BreadPage': BreadPage,
   'locations.LocationsIndexPage': LocationsIndexPage,
   'locations.LocationPage': LocationPage,
+  'people.PeopleIndexPage': PeopleIndexPage,
+  'people.PersonPage': PersonPage,
 } as const;
 
 export type PageType = keyof typeof pageComponents;

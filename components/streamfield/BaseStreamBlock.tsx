@@ -27,7 +27,9 @@ export default function BaseStreamBlock({ blocks }: BaseStreamBlockProps) {
       {blocks.map((block) => {
         const Block = blockComponents[block.type] as BlockComponent;
         return Block ? (
-          <Block key={block.id} block={block} />
+          <div key={block.id} className={`block-${block.type}`}>
+            <Block block={block} />
+          </div>
         ) : (
           <pre key={block.id}>{JSON.stringify(block, null, 2)}</pre>
         );

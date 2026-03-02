@@ -1,13 +1,13 @@
-import type { recipeBlocks } from '@/models/blocks/recipes';
-import BlockQuote from './BlockQuote';
-import CaptionedImageBlock from './CaptionedImageBlock';
-import EmbedBlock from './EmbedBlock';
-import HeadingBlock from './HeadingBlock';
-import IngredientsListBlock from './IngredientsListBlock';
-import RichTextBlock from './RichTextBlock';
-import StepsListBlock from './StepsListBlock';
-import TableBlock from './TableBlock';
-import TypedTableBlock from './TypedTableBlock';
+import type { recipeBlocks } from "@/models/blocks/recipes";
+import BlockQuote from "./BlockQuote";
+import CaptionedImageBlock from "./CaptionedImageBlock";
+import EmbedBlock from "./EmbedBlock";
+import HeadingBlock from "./HeadingBlock";
+import IngredientsListBlock from "./IngredientsListBlock";
+import RichTextBlock from "./RichTextBlock";
+import StepsListBlock from "./StepsListBlock";
+import TableBlock from "./TableBlock";
+import TypedTableBlock from "./TypedTableBlock";
 
 const blockComponents = {
   // Base blocks
@@ -37,7 +37,9 @@ export default function RecipeStreamBlock({ blocks }: RecipeStreamBlockProps) {
       {blocks.map((block) => {
         const Block = blockComponents[block.type] as BlockComponent;
         return Block ? (
-          <Block key={block.id} block={block} />
+          <div key={block.id} className={`block-${block.type}`}>
+            <Block block={block} />
+          </div>
         ) : (
           <pre key={block.id}>{JSON.stringify(block, null, 2)}</pre>
         );

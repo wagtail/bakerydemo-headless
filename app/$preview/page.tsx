@@ -22,7 +22,11 @@ export default async function Preview({
   }
 
   if (!draft.isEnabled || !data.token || !data.contentType) {
-    return <h1>Preview unavailable.</h1>;
+    return (
+      <main id="main-content">
+        <h1>Preview unavailable.</h1>
+      </main>
+    );
   }
 
   const params = await searchParams;
@@ -33,10 +37,12 @@ export default async function Preview({
   return (
     <>
       <DynamicUserbar hidden={params.inPreviewPanel === 'true'} />
-      <PageComponent
-        page={page as wagtailcore.Page}
-        searchParams={searchParams}
-      />
+      <main id="main-content">
+        <PageComponent
+          page={page as wagtailcore.Page}
+          searchParams={searchParams}
+        />
+      </main>
     </>
   );
 }
