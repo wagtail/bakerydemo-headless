@@ -46,7 +46,8 @@ export default async function Page({ params, searchParams }: PageProps) {
         </main>
       </>
     );
-  } catch {
+  } catch (error) {
+    console.error(`Error fetching page for path ${path}:`, error);
     notFound();
   }
 }
