@@ -3,6 +3,7 @@ import base from './base';
 import blog from './blog';
 import breads from './breads';
 import locations from './locations';
+import people from './people';
 import recipes from './recipes';
 import wagtailcore from './wagtailcore';
 import wagtailimages from './wagtailimages';
@@ -16,6 +17,7 @@ const schemas = {
   recipes,
   locations,
   blog,
+  people,
 } as const;
 
 export default schemas;
@@ -24,6 +26,7 @@ export type { base } from './base';
 export type { blog } from './blog';
 export type { breads } from './breads';
 export type { locations } from './locations';
+export type { people } from './people';
 export type { recipes } from './recipes';
 
 export type { wagtailcore } from './wagtailcore';
