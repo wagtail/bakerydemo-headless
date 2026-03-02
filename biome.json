@@ -66,5 +66,16 @@
     "assist": {
       "enabled": false
     }
+  },
+  "html": {
+    "formatter": {
+      "enabled": false
+    },
+    "linter": {
+      "enabled": false
+    },
+    "assist": {
+      "enabled": false
+    }
   }
 }
