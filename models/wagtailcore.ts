@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // Utility function to remove origin from URL
 const removeOrigin = (url: string): string => {
-  return url.replace(/^(?:https?:\/\/[^/]+)?/, "");
+  return url.replace(/^(?:https?:\/\/[^/]+)?/, '');
 };
 
 // Base meta fields schema for all models
