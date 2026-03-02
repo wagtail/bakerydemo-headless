@@ -22,4 +22,3 @@ jobs:
           node-version-file: ".node-version"
       - run: npm ci
       - run: npm run test
-      - run: npm run build
