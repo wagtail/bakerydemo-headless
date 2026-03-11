@@ -1,13 +1,10 @@
 # Wagtail Bakery Demo - Next.js Frontend
 
-This is a highly-experimental headless version of [Wagtail's bakerydemo](https://github.com/wagtail/bakerydemo), built with [Next.js](https://nextjs.org) and Wagtail API v2. It demonstrates how to use Wagtail as a headless CMS with a modern React-based frontend.
+This is a headless version of [Wagtail's bakerydemo](https://github.com/wagtail/bakerydemo), built with [Next.js](https://nextjs.org) and Wagtail REST API v2. It demonstrates how to use Wagtail as a headless CMS with a modern React-based frontend.
 
 ## Prerequisites
 
-- A running instance of the [Wagtail bakerydemo](https://github.com/wagtail/bakerydemo) backend
-  - You can use the [headless](https://github.com/wagtail/bakerydemo/tree/headless) branch for now, which has the necessary setup for headless usage
-  - To test the userbar, you can use [the latest `main` branch of Wagtail](https://github.com/wagtail/wagtail) or [the latest Wagtail nightly build](https://releases.wagtail.io/nightly/index.html)
-- Node.js 22.x or later
+This site serves as a good demonstration of Wagtail’s built-in support for headless architectures. It requires running a copy of the [Wagtail bakerydemo](https://github.com/wagtail/bakerydemo) backend, switching to its [headless branch](https://github.com/wagtail/bakerydemo/tree/headless) which changes the site from serving content via HTML templates and an API to API-only mode.
 
 ## Getting Started
 
