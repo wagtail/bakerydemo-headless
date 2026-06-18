@@ -10,12 +10,19 @@ declare global {
   }
 }
 
-export default function Userbar({ hidden = false }: { hidden?: boolean }) {
+export default function Userbar({
+  hidden = false,
+  pageId,
+}: {
+  hidden?: boolean;
+  pageId?: number;
+}) {
   const userbarRef = useRef<HTMLDivElement>(null);
   const apiHost = process.env.NEXT_PUBLIC_WAGTAIL_API_HOST as string;
 
   useEffect(() => {
-    fetch(`${apiHost}/userbar/`)
+    const userbarUrl = `${apiHost}/userbar/${pageId ? `?page_id=${pageId}` : ''}`;
+    fetch(userbarUrl, { credentials: 'include' })
       .then((res) => res.text())
       .then((userbar) => {
         if (
@@ -27,7 +34,7 @@ export default function Userbar({ hidden = false }: { hidden?: boolean }) {
           return;
         userbarRef.current.innerHTML = userbar;
       });
-  }, [apiHost]);
+  }, [apiHost, pageId]);
 
   return (
     <>

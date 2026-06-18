@@ -36,7 +36,10 @@ export default async function Preview({
 
   return (
     <>
-      <DynamicUserbar hidden={params.inPreviewPanel === 'true'} />
+      <DynamicUserbar
+        hidden={params.inPreviewPanel === 'true'}
+        pageId={page.id}
+      />
       <main id="main-content">
         <PageComponent
           page={page as wagtailcore.Page}
