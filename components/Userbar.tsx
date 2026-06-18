@@ -10,7 +10,13 @@ declare global {
   }
 }
 
-export default function Userbar({ hidden = false, pageId = null }: { hidden?: boolean, page_id?: number }) {
+export default function Userbar({
+  hidden = false,
+  pageId,
+}: {
+  hidden?: boolean;
+  pageId?: number;
+}) {
   const userbarRef = useRef<HTMLDivElement>(null);
   const apiHost = process.env.NEXT_PUBLIC_WAGTAIL_API_HOST as string;
 
@@ -28,7 +34,7 @@ export default function Userbar({ hidden = false, pageId = null }: { hidden?: bo
           return;
         userbarRef.current.innerHTML = userbar;
       });
-  }, [apiHost]);
+  }, [apiHost, pageId]);
 
   return (
     <>

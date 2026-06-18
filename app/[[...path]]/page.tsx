@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import DynamicUserbar from '@/components/DynamicUserbar';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { getPageComponent, type PageType } from '@/components/pages';
 import api from '@/lib/api';
@@ -41,6 +42,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     return (
       <>
         <Breadcrumbs page={basicPage} />
+        <DynamicUserbar pageId={page.id} />
         <main id="main-content">
           <PageComponent page={page} searchParams={searchParams} />
         </main>
