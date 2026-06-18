@@ -3,18 +3,18 @@ import { z } from 'zod';
 import { type ContentType, getSchema, type Schema } from '@/models';
 
 // Helper to get the underlying schema, bypassing transforms
-const getBaseSchema = (schema: z.ZodTypeAny): z.ZodObject<z.ZodRawShape> => {
-  if (schema instanceof z.ZodEffects) {
-    return getBaseSchema(schema.innerType());
+const getBaseSchema = (schema: z.ZodType): z.ZodObject => {
+  if (schema instanceof z.ZodPipe) {
+    return getBaseSchema(schema.in as z.ZodType);
   }
   if (schema instanceof z.ZodNullable) {
-    return getBaseSchema(schema.unwrap());
+    return getBaseSchema(schema.unwrap() as z.ZodType);
   }
-  return schema as z.ZodObject<z.ZodRawShape>;
+  return schema as z.ZodObject;
 };
 
 // Helper to get relation fields recursively
-const getRelationFields = (schema: z.ZodTypeAny): string[] => {
+const getRelationFields = (schema: z.ZodType): string[] => {
   const baseSchema = getBaseSchema(schema);
   const fields: string[] = [];
 
@@ -161,15 +161,15 @@ export class WagtailAPI {
   async getPage<CT extends ContentType>(
     id: number,
     contentType: CT,
-  ): Promise<z.infer<Schema<CT>>>;
+  ): Promise<z.output<Schema<CT>>>;
   async getPage<CT extends ContentType>(
     path: string,
     contentType: CT,
-  ): Promise<z.infer<Schema<CT>>>;
+  ): Promise<z.output<Schema<CT>>>;
   async getPage<CT extends ContentType>(
     pathOrId: string | number,
     contentType: CT,
-  ): Promise<z.infer<Schema<CT>>> {
+  ): Promise<z.output<Schema<CT>>> {
     const schema = getSchema(contentType);
     // Get base fields and add parent explicitly for detail view
     const fields = [...getSchemaFields(schema), 'parent'].join(',');
@@ -182,15 +182,17 @@ export class WagtailAPI {
       );
       const page = getSchema('wagtailcore.Page').parse(data);
       // Return as-is for the base Page type as we don't need any extra fields
-      if (contentType === 'wagtailcore.Page') return page;
+      if (contentType === 'wagtailcore.Page') {
+        return page as z.output<Schema<CT>>;
+      }
 
-      id = page.id as number;
+      id = page.id;
     }
 
     const data = await this.fetch<unknown>(
       `/api/v2/pages/${id}/?fields=${fields}`,
     );
-    return schema.parse(data);
+    return schema.parse(data) as z.output<Schema<CT>>;
   }
 
   /**
@@ -216,18 +218,21 @@ export class WagtailAPI {
     return {
       ...data,
       items: data.items.map(
-        (item) => schema.parse(item) as z.infer<Schema<CT>>,
+        (item) => schema.parse(item) as z.output<Schema<CT>>,
       ),
     };
   }
 
-  async getPreview<CT extends ContentType>(contentType: CT, token: string) {
+  async getPreview<CT extends ContentType>(
+    contentType: CT,
+    token: string,
+  ): Promise<z.output<Schema<CT>>> {
     const schema = getSchema(contentType);
     const fields = getSchemaFields(schema).join(',');
     const data = await this.fetch<unknown>(
       `/api/v2/preview/?content_type=${contentType}&token=${token}&fields=${fields}`,
     );
-    return schema.parse(data);
+    return schema.parse(data) as z.output<Schema<CT>>;
   }
 
   /**

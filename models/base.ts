@@ -76,8 +76,8 @@ const formPageSchema = wagtailcore.Page.extend({
   image: wagtailimages.Image.nullable(),
   body: z.array(z.any()), // StreamField
   thank_you_text: z.string(),
-  from_address: z.string().email().or(z.literal('')),
-  to_address: z.string().email().or(z.literal('')),
+  from_address: z.union([z.email(), z.literal('')]),
+  to_address: z.union([z.email(), z.literal('')]),
   subject: z.string(),
   form_fields: z.array(formFieldSchema),
 });
@@ -85,9 +85,9 @@ const formPageSchema = wagtailcore.Page.extend({
 // Generic Settings schema
 const genericSettingsSchema = z.object({
   id: z.number().nullable(),
-  mastodon_url: z.string().url().optional(),
-  github_url: z.string().url().optional(),
-  organisation_url: z.string().url().optional(),
+  mastodon_url: z.url().optional(),
+  github_url: z.url().optional(),
+  organisation_url: z.url().optional(),
 });
 
 // Site Settings schema

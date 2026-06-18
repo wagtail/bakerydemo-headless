@@ -17,7 +17,7 @@ const socialMediaLinkSchema = z.object({
       'mastodon',
       'website',
     ]),
-    url: z.string().url(),
+    url: z.url(),
   }),
 });
 

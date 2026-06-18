@@ -50,7 +50,7 @@ const embedBlockSchema = z.object({
   type: z.literal('embed_block'),
   id: z.string(),
   value: z.object({
-    url: z.string().url(),
+    url: z.url(),
     html: z.string(), // Rendered embed HTML
   }),
 });
