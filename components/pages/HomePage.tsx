@@ -120,19 +120,19 @@ export default async function HomePage({
           </div>
 
           <div className="col-sm-6 promo">
-            {(page.promo_image || page.promo_title || page.promo_text) && (
+            {(page.lead_image || page.lead_title || page.lead_text) && (
               <div className="col-lg-10 promo-text">
-                {page.promo_title && <h2>{page.promo_title}</h2>}
-                {page.promo_text && (
-                  <div dangerouslySetInnerHTML={{ __html: page.promo_text }} />
+                {page.lead_title && <h2>{page.lead_title}</h2>}
+                {page.lead_text && (
+                  <div dangerouslySetInnerHTML={{ __html: page.lead_text }} />
                 )}
               </div>
             )}
-            {page.promo_image && (
+            {page.lead_image && (
               <figure>
                 <Image
-                  src={page.promo_image.meta.download_url}
-                  alt={page.promo_image.title}
+                  src={page.lead_image.meta.download_url}
+                  alt={page.lead_image.title}
                   width={590}
                   height={413}
                 />
