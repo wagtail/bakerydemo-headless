@@ -11,6 +11,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  DJANGO_SETTINGS_MODULE: bakerydemo.settings.dev
+  NEXT_PUBLIC_WAGTAIL_API_HOST: http://localhost:8000
+
 jobs:
   check:
     runs-on: ubuntu-slim
@@ -23,3 +27,32 @@ jobs:
           node-version-file: ".node-version"
       - run: npm ci
       - run: npm run test
+
+  render:
+    needs: check
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+      - run: git clone --depth 1 --branch headless https://github.com/wagtail/bakerydemo.git bakerydemo
+      - run: uv venv
+        working-directory: bakerydemo
+      - run: uv pip install -r requirements/base.txt
+        working-directory: bakerydemo
+      - run: |
+          uv run manage.py migrate --noinput
+          uv run manage.py load_initial_data
+        working-directory: bakerydemo
+      - run: |
+          uv run manage.py runserver 0.0.0.0:8000 &
+          sleep 3
+          curl --retry 5 --retry-delay 2 --retry-connrefused http://localhost:8000/api/v2/pages/
+        working-directory: bakerydemo
+
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version-file: ".node-version"
+      - run: npm ci
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_WAGTAIL_API_HOST: http://localhost:8000
