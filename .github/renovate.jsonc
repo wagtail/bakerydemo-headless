@@ -25,26 +25,26 @@
   "prHourlyLimit": 2,
   "node": {
     "major": {
-      "enabled": true,
+      "enabled": true
     },
     // https://renovatebot.com/docs/node/#configuring-support-policy
-    "supportPolicy": ["current"],
+    "supportPolicy": ["current"]
   },
   // https://renovatebot.com/docs/configuration-options/#lockfilemaintenance
   "lockFileMaintenance": { "enabled": true, "automerge": true },
   "packageRules": [
     {
       "matchDepTypes": ["peerDependencies"],
-      "enabled": false,
+      "enabled": false
     },
     {
       "matchDepTypes": ["devDependencies"],
-      "automerge": true,
+      "automerge": true
     },
     {
       "packagePatterns": ["^actions/", "^github/"],
       "groupName": "actions",
-      "automerge": true,
-    },
-  ],
+      "automerge": true
+    }
+  ]
 }
