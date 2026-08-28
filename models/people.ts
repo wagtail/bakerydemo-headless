@@ -1,7 +1,7 @@
 import { z } from 'zod';
+import { schemas as generated } from '@/lib/generated/schemas';
 import blocks from './blocks/base';
-import breads from './breads';
-import wagtailcore from './wagtailcore';
+import { withHtmlPath } from './wagtailcore';
 import wagtailimages from './wagtailimages';
 
 const socialMediaLinkSchema = z.object({
@@ -21,16 +21,17 @@ const socialMediaLinkSchema = z.object({
   }),
 });
 
-const personPageSchema = wagtailcore.Page.extend({
-  introduction: z.string(),
+const personPageSchema = generated.PersonPageSchema.extend({
+  meta: withHtmlPath(generated.PersonPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
   body: blocks.BaseStreamBlock,
-  location: breads.Country.nullable(),
   social_links: z.array(socialMediaLinkSchema),
+  image_hero: wagtailimages.ImageRendition.optional(),
+  image_listing: wagtailimages.ImageRendition.optional(),
 });
 
-const peopleIndexPageSchema = wagtailcore.Page.extend({
-  introduction: z.string(),
+const peopleIndexPageSchema = generated.PeopleIndexPageSchema.extend({
+  meta: withHtmlPath(generated.PeopleIndexPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
 });
 
