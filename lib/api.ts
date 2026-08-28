@@ -143,13 +143,15 @@ async function hydrateForeignKeys(value: JsonValue): Promise<JsonValue> {
       return image ? hydrateForeignKeys(image) : value;
     }
 
-    // Everything else is tried as a snippet first (small, leaf-like -
-    // safe to recurse into), falling back to a page fetch (never
-    // recursed into) for FK fields whose stub type wasn't a real snippet.
+    // Everything else is tried as a snippet (small, leaf-like - safe to
+    // recurse into). If it's not a real snippet (e.g. breads.Country,
+    // wagtailcore.Collection - no snippet API endpoint exists for these),
+    // leave the stub as-is. Do NOT fall back to a page fetch here: the
+    // numeric id belongs to whatever model `meta.type` names, not to the
+    // pages table, so treating it as a page id would silently splice in
+    // an unrelated page.
     const snippet = await getSnippetRaw(value.meta.type, value.id);
-    if (snippet) return hydrateForeignKeys(snippet);
-
-    return (await getPageRaw(value.id).catch(() => null)) ?? value;
+    return snippet ? hydrateForeignKeys(snippet) : value;
   }
 
   const entries = await Promise.all(

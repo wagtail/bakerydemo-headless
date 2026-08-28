@@ -1,26 +1,30 @@
 import { z } from 'zod';
-import { schemas as generated } from '@/lib/generated/schemas';
+import {
+  RecipeIndexPageSchema as GeneratedRecipeIndexPageSchema,
+  RecipePageSchema as GeneratedRecipePageSchema,
+  RecipePersonRelationshipSchema as GeneratedRecipePersonRelationshipSchema,
+} from '@/lib/generated/schemas';
 import base from './base';
 import blocks from './blocks';
 import { withHtmlPath } from './wagtailcore';
 
 // RecipePersonRelationship schema
 const recipePersonRelationshipSchema =
-  generated.RecipePersonRelationshipSchema.extend({
+  GeneratedRecipePersonRelationshipSchema.extend({
     person: base.Person,
   });
 
 // RecipePage schema
-const recipePageSchema = generated.RecipePageSchema.extend({
-  meta: withHtmlPath(generated.RecipePageSchema.shape.meta),
+const recipePageSchema = GeneratedRecipePageSchema.extend({
+  meta: withHtmlPath(GeneratedRecipePageSchema.shape.meta),
   backstory: blocks.base.BaseStreamBlock,
   body: blocks.recipes.RecipeStreamBlock,
   recipe_person_relationship: z.array(recipePersonRelationshipSchema),
 });
 
 // RecipeIndexPage schema
-const recipeIndexPageSchema = generated.RecipeIndexPageSchema.extend({
-  meta: withHtmlPath(generated.RecipeIndexPageSchema.shape.meta),
+const recipeIndexPageSchema = GeneratedRecipeIndexPageSchema.extend({
+  meta: withHtmlPath(GeneratedRecipeIndexPageSchema.shape.meta),
 });
 
 // Export schemas

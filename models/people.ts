@@ -1,5 +1,8 @@
 import { z } from 'zod';
-import { schemas as generated } from '@/lib/generated/schemas';
+import {
+  PeopleIndexPageSchema as GeneratedPeopleIndexPageSchema,
+  PersonPageSchema as GeneratedPersonPageSchema,
+} from '@/lib/generated/schemas';
 import blocks from './blocks/base';
 import { withHtmlPath } from './wagtailcore';
 import wagtailimages from './wagtailimages';
@@ -21,8 +24,8 @@ const socialMediaLinkSchema = z.object({
   }),
 });
 
-const personPageSchema = generated.PersonPageSchema.extend({
-  meta: withHtmlPath(generated.PersonPageSchema.shape.meta),
+const personPageSchema = GeneratedPersonPageSchema.extend({
+  meta: withHtmlPath(GeneratedPersonPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
   body: blocks.BaseStreamBlock,
   social_links: z.array(socialMediaLinkSchema),
@@ -30,8 +33,8 @@ const personPageSchema = generated.PersonPageSchema.extend({
   image_listing: wagtailimages.ImageRendition.optional(),
 });
 
-const peopleIndexPageSchema = generated.PeopleIndexPageSchema.extend({
-  meta: withHtmlPath(generated.PeopleIndexPageSchema.shape.meta),
+const peopleIndexPageSchema = GeneratedPeopleIndexPageSchema.extend({
+  meta: withHtmlPath(GeneratedPeopleIndexPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
 });
 

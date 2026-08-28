@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { schemas as generated } from '@/lib/generated/schemas';
+import {
+  BasePageMetaSchema,
+  PageSchema as GeneratedPageSchema,
+  SimpleBasePageMetaSchema,
+  SimpleBasePageSchema,
+} from '@/lib/generated/schemas';
 
 // Utility function to remove origin from URL
 const removeOrigin = (url: string): string => {
@@ -7,7 +12,7 @@ const removeOrigin = (url: string): string => {
 };
 
 // Base meta fields schema for all models (snippets etc.)
-const baseMetaSchema = generated.BasePageMetaSchema.pick({
+const baseMetaSchema = BasePageMetaSchema.pick({
   type: true,
   detail_url: true,
 });
@@ -17,8 +22,8 @@ const baseMetaSchema = generated.BasePageMetaSchema.pick({
 // and for page FK fields elsewhere (e.g. HomePage.hero_cta_link) once
 // lib/api.ts has hydrated their `{id, meta}` stub to a full page fetch -
 // only this reduced shape is picked out of that larger response.
-export const pageLinkSchema = generated.SimpleBasePageSchema.extend({
-  meta: generated.SimpleBasePageMetaSchema.transform(
+export const pageLinkSchema = SimpleBasePageSchema.extend({
+  meta: SimpleBasePageMetaSchema.transform(
     (data): typeof data & { html_path: string } => {
       const typed = data as { html_url?: string | null };
       return {
@@ -82,9 +87,15 @@ export function withHtmlPath<
   );
 }
 
-// Full page schema, with html_path derived from html_url
-const pageSchema = generated.PageSchema.extend({
-  meta: withHtmlPath(generated.PageSchema.shape.meta),
+// Full page schema, with html_path derived from html_url. `meta.type` is
+// widened from the generated `z.literal("wagtailcore.Page")` to `z.string()`
+// - every specific page type (base.StandardPage, blog.BlogPage, etc.) must
+// structurally satisfy this base Page type for PageComponentProps<T> to
+// work, which the literal blocks.
+const pageSchema = GeneratedPageSchema.extend({
+  meta: withHtmlPath(
+    GeneratedPageSchema.shape.meta.extend({ type: z.string() }),
+  ),
   id: z.number(),
 });
 

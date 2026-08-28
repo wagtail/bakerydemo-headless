@@ -1,17 +1,21 @@
 import { z } from 'zod';
-import { schemas as generated } from '@/lib/generated/schemas';
+import {
+  LocationOperatingHoursSchema as GeneratedLocationOperatingHoursSchema,
+  LocationPageSchema as GeneratedLocationPageSchema,
+  LocationsIndexPageSchema as GeneratedLocationsIndexPageSchema,
+} from '@/lib/generated/schemas';
 import blocks from './blocks/base';
 import { withHtmlPath } from './wagtailcore';
 import wagtailimages from './wagtailimages';
 
 // Operating Hours schema
-const operatingHoursSchema = generated.LocationOperatingHoursSchema.extend({
+const operatingHoursSchema = GeneratedLocationOperatingHoursSchema.extend({
   day: z.enum(['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']),
 });
 
 // LocationPage schema
-const locationPageSchema = generated.LocationPageSchema.extend({
-  meta: withHtmlPath(generated.LocationPageSchema.shape.meta),
+const locationPageSchema = GeneratedLocationPageSchema.extend({
+  meta: withHtmlPath(GeneratedLocationPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
   body: blocks.BaseStreamBlock,
   is_open: z.boolean(),
@@ -22,8 +26,8 @@ const locationPageSchema = generated.LocationPageSchema.extend({
 });
 
 // LocationsIndexPage schema
-const locationsIndexPageSchema = generated.LocationsIndexPageSchema.extend({
-  meta: withHtmlPath(generated.LocationsIndexPageSchema.shape.meta),
+const locationsIndexPageSchema = GeneratedLocationsIndexPageSchema.extend({
+  meta: withHtmlPath(GeneratedLocationsIndexPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
 });
 

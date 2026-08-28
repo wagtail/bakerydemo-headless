@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { schemas as generated } from '@/lib/generated/schemas';
+import { ImageSchema as GeneratedImageSchema } from '@/lib/generated/schemas';
 
 // Full image schema (as returned by GET /images/{id}/, and as hydrated by
 // lib/api.ts in place of the thin `ImageForeignKeySchema` stubs nested
 // inside page/snippet responses).
-const imageSchema = generated.ImageSchema.extend({
-  meta: generated.ImageSchema.shape.meta.extend({
+const imageSchema = GeneratedImageSchema.extend({
+  meta: GeneratedImageSchema.shape.meta.extend({
     download_url: z
       .string()
       .transform((url) => `${process.env.NEXT_PUBLIC_WAGTAIL_API_HOST!}${url}`),

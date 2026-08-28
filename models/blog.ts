@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import { schemas as generated } from '@/lib/generated/schemas';
+import {
+  BlogIndexPageSchema as GeneratedBlogIndexPageSchema,
+  BlogPageSchema as GeneratedBlogPageSchema,
+  BlogPersonRelationshipSchema as GeneratedBlogPersonRelationshipSchema,
+} from '@/lib/generated/schemas';
 import base from './base';
 import blocks from './blocks/base';
 import { withHtmlPath } from './wagtailcore';
@@ -7,13 +11,13 @@ import wagtailimages from './wagtailimages';
 
 // BlogPersonRelationship schema
 const blogPersonRelationshipSchema =
-  generated.BlogPersonRelationshipSchema.extend({
+  GeneratedBlogPersonRelationshipSchema.extend({
     person: base.Person,
   });
 
 // BlogPage schema
-const blogPageSchema = generated.BlogPageSchema.extend({
-  meta: withHtmlPath(generated.BlogPageSchema.shape.meta),
+const blogPageSchema = GeneratedBlogPageSchema.extend({
+  meta: withHtmlPath(GeneratedBlogPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
   body: blocks.BaseStreamBlock,
   blog_person_relationship: z.array(blogPersonRelationshipSchema),
@@ -23,8 +27,8 @@ const blogPageSchema = generated.BlogPageSchema.extend({
 });
 
 // BlogIndexPage schema
-const blogIndexPageSchema = generated.BlogIndexPageSchema.extend({
-  meta: withHtmlPath(generated.BlogIndexPageSchema.shape.meta),
+const blogIndexPageSchema = GeneratedBlogIndexPageSchema.extend({
+  meta: withHtmlPath(GeneratedBlogIndexPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
 });
 

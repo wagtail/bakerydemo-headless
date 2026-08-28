@@ -1,26 +1,34 @@
 import { z } from 'zod';
-import { schemas as generated } from '@/lib/generated/schemas';
+import {
+  CollectionForeignKeySchema,
+  FormFieldSchema as GeneratedFormFieldSchema,
+  FormPageSchema as GeneratedFormPageSchema,
+  GalleryPageSchema as GeneratedGalleryPageSchema,
+  HomePageSchema as GeneratedHomePageSchema,
+  PersonSchema as GeneratedPersonSchema,
+  StandardPageSchema as GeneratedStandardPageSchema,
+} from '@/lib/generated/schemas';
 import blocks from './blocks/base';
 import { pageLinkSchema, withHtmlPath } from './wagtailcore';
 import wagtailimages from './wagtailimages';
 
 // Person schema
-const personSchema = generated.PersonSchema.extend({
+const personSchema = GeneratedPersonSchema.extend({
   image: wagtailimages.Image.nullable(),
   image_listing: wagtailimages.ImageRendition.optional(),
 });
 
 // Standard Page schema
-const standardPageSchema = generated.StandardPageSchema.extend({
-  meta: withHtmlPath(generated.StandardPageSchema.shape.meta),
+const standardPageSchema = GeneratedStandardPageSchema.extend({
+  meta: withHtmlPath(GeneratedStandardPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
   body: blocks.BaseStreamBlock,
   image_hero: wagtailimages.ImageRendition.optional(),
 });
 
 // Home Page schema
-const homePageSchema = generated.HomePageSchema.extend({
-  meta: withHtmlPath(generated.HomePageSchema.shape.meta),
+const homePageSchema = GeneratedHomePageSchema.extend({
+  meta: withHtmlPath(GeneratedHomePageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
   lead_image: wagtailimages.Image.nullable(),
   body: blocks.BaseStreamBlock,
@@ -33,17 +41,17 @@ const homePageSchema = generated.HomePageSchema.extend({
 });
 
 // Gallery Page schema
-const galleryPageSchema = generated.GalleryPageSchema.extend({
-  meta: withHtmlPath(generated.GalleryPageSchema.shape.meta),
+const galleryPageSchema = GeneratedGalleryPageSchema.extend({
+  meta: withHtmlPath(GeneratedGalleryPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
-  collection: generated.CollectionForeignKeySchema.extend({
+  collection: CollectionForeignKeySchema.extend({
     id: z.number(),
   }).nullable(),
   image_hero: wagtailimages.ImageRendition.optional(),
 });
 
 // Form Field schema
-const formFieldSchema = generated.FormFieldSchema.extend({
+const formFieldSchema = GeneratedFormFieldSchema.extend({
   choices: z
     .string()
     .nullable()
@@ -51,8 +59,8 @@ const formFieldSchema = generated.FormFieldSchema.extend({
 });
 
 // Form Page schema
-const formPageSchema = generated.FormPageSchema.extend({
-  meta: withHtmlPath(generated.FormPageSchema.shape.meta),
+const formPageSchema = GeneratedFormPageSchema.extend({
+  meta: withHtmlPath(GeneratedFormPageSchema.shape.meta),
   image: wagtailimages.Image.nullable(),
   body: blocks.BaseStreamBlock,
   form_fields: z.array(formFieldSchema),
