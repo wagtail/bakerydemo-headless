@@ -1,5 +1,5 @@
 import HeaderHero from '@/components/headers/HeaderHero';
-import type { people } from '@/models';
+import { getRendition, type Page } from '@/lib/wagtail';
 import BaseStreamBlock from '../streamfield/BaseStreamBlock';
 import type { PageComponentProps } from './types';
 
@@ -106,10 +106,10 @@ function SocialIcon({ platform }: { platform: string }) {
 
 export default async function PersonPage({
   page,
-}: PageComponentProps<people.PersonPage>) {
+}: PageComponentProps<Page<'people.PersonPage'>>) {
   return (
     <>
-      <HeaderHero title={page.title} image={page.image} />
+      <HeaderHero title={page.title} image={getRendition(page.image_hero)} />
 
       <div className="container bread-detail">
         <div className="row">
@@ -142,20 +142,21 @@ export default async function PersonPage({
                     <>
                       <p className="bread-detail__meta-title">Socials</p>
                       <div className="social-links">
-                        {page.social_links.map((link) => (
-                          <a
-                            key={link.id}
-                            href={link.value.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title={
-                              platformLabels[link.value.platform] ||
-                              link.value.platform
-                            }
-                          >
-                            <SocialIcon platform={link.value.platform} />
-                          </a>
-                        ))}
+                        {page.social_links.map(({ id, value }) =>
+                          value.platform && value.url ? (
+                            <a
+                              key={id}
+                              href={value.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title={
+                                platformLabels[value.platform] || value.platform
+                              }
+                            >
+                              <SocialIcon platform={value.platform} />
+                            </a>
+                          ) : null,
+                        )}
                       </div>
                     </>
                   )}

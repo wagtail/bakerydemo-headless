@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import DynamicUserbar from '@/components/DynamicUserbar';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
-import { getPageComponent, type PageType } from '@/components/pages';
+import { getPageComponent } from '@/components/pages';
 import api from '@/lib/api';
 
 interface PageProps {
@@ -15,10 +15,10 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { path: pathSplit = [] } = await params;
   const path = `/${pathSplit.join('/')}`;
-  const basicPage = await api.getPage(path, 'wagtailcore.Page');
+  const page = await api.getPage(path);
   return {
-    title: basicPage.meta.seo_title || basicPage.title,
-    description: basicPage.meta.search_description,
+    title: page.meta.seo_title || page.title,
+    description: page.meta.search_description,
   };
 }
 
@@ -27,22 +27,14 @@ export default async function Page({ params, searchParams }: PageProps) {
   const path = `/${pathSplit.join('/')}`;
 
   try {
-    // First fetch to get the specific page type
-    const basicPage = await api.getPage(path, 'wagtailcore.Page');
-
-    // Get the specific page type from meta
-    const pageType = basicPage.meta.type as PageType;
-
-    // Check if we have a component for this page type
-    const PageComponent = getPageComponent(pageType);
-
-    // Second fetch to get the full page data with the specific type
-    const page = await api.getPage(basicPage.id, pageType);
+    // The page detail is already resolved to its specific type
+    const page = await api.getPage(path);
+    const PageComponent = getPageComponent(page.meta.type);
 
     return (
       <>
-        <Breadcrumbs page={basicPage} />
-        <DynamicUserbar pageId={page.id} />
+        <Breadcrumbs page={page} />
+        <DynamicUserbar pageId={page.id ?? undefined} />
         <main id="main-content">
           <PageComponent page={page} searchParams={searchParams} />
         </main>

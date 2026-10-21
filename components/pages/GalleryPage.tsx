@@ -1,19 +1,21 @@
 import Image from 'next/image';
 import HeaderHero from '@/components/headers/HeaderHero';
 import api from '@/lib/api';
-import type { base } from '@/models';
+import { getMediaUrl, getRendition, type Page } from '@/lib/wagtail';
 import type { PageComponentProps } from './types';
 
 export default async function GalleryPage({
   page,
-}: PageComponentProps<base.GalleryPage>) {
+}: PageComponentProps<Page<'base.GalleryPage'>>) {
   const images = page.collection
-    ? await api.getImages({ collection: page.collection.id.toString() })
+    ? await api.getImages({
+        filters: { collection: String(page.collection.id) },
+      })
     : null;
 
   return (
     <>
-      <HeaderHero title={page.title} image={page.image} />
+      <HeaderHero title={page.title} image={getRendition(page.image_hero)} />
 
       <div className="container gallery__container">
         <div className="row">
@@ -28,10 +30,10 @@ export default async function GalleryPage({
             <div key={image.id} className="picture-card">
               <figure className="picture-card__image">
                 <Image
-                  src={image.meta.download_url}
-                  alt={image.title}
-                  width={645}
-                  height={480}
+                  src={getMediaUrl(image.meta.download_url ?? '')}
+                  alt={image.description || image.title}
+                  width={image.width}
+                  height={image.height}
                   sizes="(max-width: 768px) 150px, 30vw"
                   loading="lazy"
                 />

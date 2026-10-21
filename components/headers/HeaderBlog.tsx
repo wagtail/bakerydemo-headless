@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import { formatDate } from '@/lib/format';
-import type { wagtailimages } from '@/models';
+import type { ImageRendition } from '@/lib/wagtail';
 
 interface HeaderBlogProps {
   title: string;
-  subtitle?: string;
-  introduction?: string;
+  subtitle?: string | null;
+  introduction?: string | null;
   date_published?: string | null;
-  image?: wagtailimages.Image | null;
+  image?: ImageRendition | null;
 }
 
 export default function HeaderBlog({
@@ -22,10 +22,10 @@ export default function HeaderBlog({
       {image && (
         <div className="container-fluid hero hero--blog">
           <Image
-            src={image.meta.download_url}
+            src={image.full_url}
             alt=""
-            width={1920}
-            height={600}
+            width={image.width}
+            height={image.height}
             sizes="100vw"
             className="hero-image"
             priority

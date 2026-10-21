@@ -46,13 +46,17 @@ jobs:
       - run: |
           uv run manage.py runserver 0.0.0.0:8000 &
           sleep 3
-          curl --retry 5 --retry-delay 2 --retry-connrefused http://localhost:8000/api/v2/pages/
+          curl --retry 5 --retry-delay 2 --retry-connrefused http://localhost:8000/api/v3-preview/pages/
         working-directory: bakerydemo
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: ".node-version"
       - run: npm ci
+      - name: Check the generated API types are up to date
+        run: |
+          npm run generate-api
+          git diff --exit-code lib/generated
       - run: npm run build
         env:
           NEXT_PUBLIC_WAGTAIL_API_HOST: http://localhost:8000

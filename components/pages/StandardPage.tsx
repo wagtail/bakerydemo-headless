@@ -1,14 +1,14 @@
 import HeaderHero from '@/components/headers/HeaderHero';
-import type { base } from '@/models';
+import { getRendition, type Page } from '@/lib/wagtail';
 import BaseStreamBlock from '../streamfield/BaseStreamBlock';
 import type { PageComponentProps } from './types';
 
 export default async function StandardPage({
   page,
-}: PageComponentProps<base.StandardPage>) {
+}: PageComponentProps<Page<'base.StandardPage'>>) {
   return (
     <>
-      <HeaderHero title={page.title} image={page.image} />
+      <HeaderHero title={page.title} image={getRendition(page.image_hero)} />
 
       <div className="container bread-detail">
         <div className="row">

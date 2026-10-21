@@ -1,16 +1,14 @@
 import BlogListingCard from '@/components/cards/BlogListingCard';
 import HeaderIndex from '@/components/headers/HeaderIndex';
 import api from '@/lib/api';
-import type { recipes } from '@/models';
+import { getPath, type Page } from '@/lib/wagtail';
 import type { PageComponentProps } from './types';
 
 export default async function RecipeIndexPage({
   page,
-}: PageComponentProps<recipes.RecipeIndexPage>) {
+}: PageComponentProps<Page<'recipes.RecipeIndexPage'>>) {
   const { items: recipeItems } = page.id
-    ? await api.getPages('recipes.RecipePage', {
-        child_of: page.id.toString(),
-      })
+    ? await api.getPages({ type: 'recipes.RecipePage', child_of: page.id })
     : { items: [] };
 
   return (
@@ -23,12 +21,13 @@ export default async function RecipeIndexPage({
             recipeItems.map((recipe) => (
               <BlogListingCard
                 key={recipe.id}
-                url={recipe.meta.html_path}
+                url={getPath(recipe.meta.html_url)}
                 title={recipe.title}
                 introduction={recipe.introduction}
                 date_published={recipe.date_published}
-                authors={recipe.recipe_person_relationship.map(
-                  (rel) => `${rel.person.first_name} ${rel.person.last_name}`,
+                authors={recipe.recipe_person_relationship.flatMap(
+                  ({ person }) =>
+                    person ? [`${person.first_name} ${person.last_name}`] : [],
                 )}
               />
             ))

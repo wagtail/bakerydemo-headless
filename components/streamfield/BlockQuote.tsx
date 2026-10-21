@@ -1,9 +1,9 @@
-import type { blocks } from '@/models/blocks/base';
+import type { Block } from './types';
 
 export default function BlockQuote({
   block: { value },
 }: {
-  block: blocks.BlockQuote;
+  block: Block<'block_quote'>;
 }) {
   const theme = value.settings?.theme || '';
   const textSize = value.settings?.text_size || '';

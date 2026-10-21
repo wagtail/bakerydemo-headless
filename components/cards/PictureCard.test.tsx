@@ -3,12 +3,11 @@ import { describe, expect, it } from 'vitest';
 import PictureCard from '@/components/cards/PictureCard';
 
 const fakeImage = {
-  id: 1,
-  title: 'Test image',
-  meta: {
-    type: 'wagtailimages.Image',
-    download_url: '/media/images/test.jpg',
-  },
+  url: '/media/images/test.fill-645x480.jpg',
+  full_url: 'http://localhost:8000/media/images/test.fill-645x480.jpg',
+  width: 645,
+  height: 480,
+  alt: 'Test image',
 };
 
 describe('PictureCard', () => {
@@ -35,20 +34,30 @@ describe('PictureCard', () => {
     );
   });
 
+  it('uses the rendition dimensions', () => {
+    render(<PictureCard url="/test" title="Test" image={fakeImage} />);
+    const img = screen.getByRole('img');
+    expect(img).toHaveAttribute('width', '645');
+    expect(img).toHaveAttribute('height', '480');
+    expect(img).toHaveAttribute('alt', 'Test image');
+  });
+
   it('sets different image sizes for portrait vs landscape', () => {
     const { rerender } = render(
       <PictureCard url="/test" title="Test" image={fakeImage} />,
     );
-    const landscapeImg = screen.getByRole('img');
-    expect(landscapeImg).toHaveAttribute('width', '645');
-    expect(landscapeImg).toHaveAttribute('height', '480');
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'sizes',
+      '(max-width: 768px) 150px, 30vw',
+    );
 
     rerender(
       <PictureCard url="/test" title="Test" image={fakeImage} portrait />,
     );
-    const portraitImg = screen.getByRole('img');
-    expect(portraitImg).toHaveAttribute('width', '433');
-    expect(portraitImg).toHaveAttribute('height', '487');
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'sizes',
+      '(max-width: 768px) 125px, 400px',
+    );
   });
 
   it('renders the required BEM class structure', () => {

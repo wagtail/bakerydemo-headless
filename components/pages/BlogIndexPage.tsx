@@ -1,7 +1,7 @@
 import BlogListingCard from '@/components/cards/BlogListingCard';
 import HeaderIndex from '@/components/headers/HeaderIndex';
 import api from '@/lib/api';
-import type { blog } from '@/models';
+import { getPath, getRendition, type Page } from '@/lib/wagtail';
 import type { PageComponentProps } from './types';
 
 interface BlogSearchParams {
@@ -11,13 +11,14 @@ interface BlogSearchParams {
 export default async function BlogIndexPage({
   page,
   searchParams,
-}: PageComponentProps<blog.BlogIndexPage>) {
+}: PageComponentProps<Page<'blog.BlogIndexPage'>>) {
   const { tags: searchTags } = (await searchParams) as BlogSearchParams;
 
   const { items: posts } = page.id
-    ? await api.getPages('blog.BlogPage', {
-        child_of: page.id.toString(),
-        ...(searchTags ? { tags: searchTags } : {}),
+    ? await api.getPages({
+        type: 'blog.BlogPage',
+        child_of: page.id,
+        filters: searchTags ? { tags: searchTags } : {},
       })
     : { items: [] };
 
@@ -47,13 +48,13 @@ export default async function BlogIndexPage({
             posts.map((post) => (
               <BlogListingCard
                 key={post.id}
-                url={post.meta.html_path}
+                url={getPath(post.meta.html_url)}
                 title={post.title}
-                image={post.image}
+                image={getRendition(post.image_listing)}
                 introduction={post.introduction}
                 date_published={post.date_published}
-                authors={post.blog_person_relationship.map(
-                  (rel) => `${rel.person.first_name} ${rel.person.last_name}`,
+                authors={post.blog_person_relationship.flatMap(({ person }) =>
+                  person ? [`${person.first_name} ${person.last_name}`] : [],
                 )}
               />
             ))

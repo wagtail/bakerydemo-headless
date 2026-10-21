@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import type { wagtailimages } from '@/models';
+import type { ImageRendition } from '@/lib/wagtail';
 
 interface HeaderHeroProps {
   title: string;
-  image: wagtailimages.Image | null;
+  image?: ImageRendition | null;
 }
 
 export default function HeaderHero({ title, image }: HeaderHeroProps) {
@@ -11,10 +11,10 @@ export default function HeaderHero({ title, image }: HeaderHeroProps) {
     return (
       <div className="container-fluid hero">
         <Image
-          src={image.meta.download_url}
+          src={image.full_url}
           alt=""
-          width={1920}
-          height={600}
+          width={image.width}
+          height={image.height}
           sizes="100vw"
           className="hero-image"
           priority

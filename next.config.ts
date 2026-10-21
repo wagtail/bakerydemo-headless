@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { getPath, type PageDetail, type Redirect } from './lib/wagtail';
 
 const nextConfig: NextConfig = {
   devIndicators: { position: 'top-right' },
@@ -15,29 +16,46 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    const apiHost = process.env.NEXT_PUBLIC_WAGTAIL_API_HOST as string;
-    const baseUrl = `${apiHost}/api/v2/redirects/?fields=old_path,location`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_WAGTAIL_API_HOST}/api/v3-preview`;
+
+    // API v3 only gives the ID of a page to redirect to, unlike API v2's
+    // `location`, so the page's URL needs to be looked up separately.
+    const getDestination = async (redirect: Redirect) => {
+      if (redirect.redirect_link) return redirect.redirect_link;
+      if (!redirect.redirect_page_id) return null;
+      const response = await fetch(
+        `${apiUrl}/pages/${redirect.redirect_page_id}/`,
+      );
+      if (!response.ok) return null;
+      const page: PageDetail = await response.json();
+      return `${getPath(page.meta.html_url)}${redirect.redirect_page_route_path}`;
+    };
 
     try {
-      const items: { old_path: string; location: string }[] = [];
+      const items: Redirect[] = [];
       let offset = 0;
 
-      // eslint-disable-next-line no-constant-condition
       while (true) {
-        const url = `${baseUrl}&offset=${offset}`;
-        const response = await fetch(url);
+        const response = await fetch(`${apiUrl}/redirects/?offset=${offset}`);
         if (!response.ok) return [];
-        const data = await response.json();
+        const data: { count: number; items: Redirect[] } =
+          await response.json();
         items.push(...data.items);
-        if (items.length >= data.meta.total_count) break;
+        if (!data.items.length || items.length >= data.count) break;
         offset = items.length;
       }
 
-      return items.map((r) => ({
-        source: r.old_path,
-        destination: r.location,
-        permanent: true,
-      }));
+      const redirects = await Promise.all(
+        items.map(async (redirect) => ({
+          source: redirect.old_path,
+          destination: await getDestination(redirect),
+          permanent: redirect.is_permanent,
+        })),
+      );
+      return redirects.filter(
+        (redirect): redirect is typeof redirect & { destination: string } =>
+          redirect.destination !== null,
+      );
     } catch {
       return [];
     }

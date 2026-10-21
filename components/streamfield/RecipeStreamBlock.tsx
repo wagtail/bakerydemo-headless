@@ -1,19 +1,23 @@
-import type { recipeBlocks } from '@/models/blocks/recipes';
 import BlockQuote from './BlockQuote';
-import CaptionedImageBlock from './CaptionedImageBlock';
 import EmbedBlock from './EmbedBlock';
 import HeadingBlock from './HeadingBlock';
+import ImageBlock from './ImageBlock';
 import IngredientsListBlock from './IngredientsListBlock';
 import RichTextBlock from './RichTextBlock';
 import StepsListBlock from './StepsListBlock';
 import TableBlock from './TableBlock';
 import TypedTableBlock from './TypedTableBlock';
+import type { RecipeBlock, RecipeStreamBlockValue } from './types';
 
-const blockComponents = {
+type BlockType = RecipeStreamBlockValue[number]['type'];
+
+const blockComponents: {
+  [T in BlockType]: React.ComponentType<{ block: RecipeBlock<T> }>;
+} = {
   // Base blocks
   heading_block: HeadingBlock,
   paragraph_block: RichTextBlock,
-  image_block: CaptionedImageBlock,
+  image_block: ImageBlock,
   block_quote: BlockQuote,
   embed_block: EmbedBlock,
   // Recipe blocks
@@ -21,14 +25,14 @@ const blockComponents = {
   typed_table_block: TypedTableBlock,
   ingredients_list: IngredientsListBlock,
   steps_list: StepsListBlock,
-} as const;
+};
 
 type BlockComponent = React.ComponentType<{
-  block: recipeBlocks.RecipeStreamBlock[number];
+  block: RecipeStreamBlockValue[number];
 }>;
 
 interface RecipeStreamBlockProps {
-  blocks: recipeBlocks.RecipeStreamBlock;
+  blocks: RecipeStreamBlockValue;
 }
 
 export default function RecipeStreamBlock({ blocks }: RecipeStreamBlockProps) {

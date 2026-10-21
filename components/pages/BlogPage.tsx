@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import HeaderBlog from '@/components/headers/HeaderBlog';
-import type { blog } from '@/models';
+import { getRendition, type Page } from '@/lib/wagtail';
 import BaseStreamBlock from '../streamfield/BaseStreamBlock';
 import type { PageComponentProps } from './types';
 
 export default async function BlogPage({
   page,
-}: PageComponentProps<blog.BlogPage>) {
+}: PageComponentProps<Page<'blog.BlogPage'>>) {
   return (
     <>
       <HeaderBlog
@@ -14,7 +14,7 @@ export default async function BlogPage({
         subtitle={page.subtitle}
         introduction={page.introduction}
         date_published={page.date_published}
-        image={page.image}
+        image={getRendition(page.image_hero)}
       />
 
       <div className="container">
@@ -23,20 +23,24 @@ export default async function BlogPage({
             <div className="blog__meta">
               {page.blog_person_relationship.length > 0 && (
                 <div className="blog__avatars">
-                  {page.blog_person_relationship.map(({ person }) => (
-                    <div key={person.id} className="blog__author">
-                      {person.image && (
-                        <Image
-                          src={person.image.meta.download_url}
-                          alt=""
-                          width={50}
-                          height={50}
-                          className="blog__avatar"
-                        />
-                      )}
-                      {person.first_name} {person.last_name}
-                    </div>
-                  ))}
+                  {page.blog_person_relationship.map(({ person }) => {
+                    if (!person) return null;
+                    const avatar = getRendition(person.image_avatar);
+                    return (
+                      <div key={person.id} className="blog__author">
+                        {avatar && (
+                          <Image
+                            src={avatar.full_url}
+                            alt=""
+                            width={avatar.width}
+                            height={avatar.height}
+                            className="blog__avatar"
+                          />
+                        )}
+                        {person.first_name} {person.last_name}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

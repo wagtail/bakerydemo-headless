@@ -2,31 +2,27 @@ import ListingCard from '@/components/cards/ListingCard';
 import HeaderIndex from '@/components/headers/HeaderIndex';
 import Pagination from '@/components/Pagination';
 import api from '@/lib/api';
-import type { people } from '@/models';
+import { getPath, getRendition, type Page } from '@/lib/wagtail';
 import type { PageComponentProps } from './types';
-
-interface PeopleIndexPageProps
-  extends PageComponentProps<people.PeopleIndexPage> {
-  searchParams: Promise<{ page: string }>;
-}
 
 export default async function PeopleIndexPage({
   page,
   searchParams,
-}: PeopleIndexPageProps) {
+}: PageComponentProps<Page<'people.PeopleIndexPage'>>) {
   const currentPage = Number((await searchParams)?.page || '1');
   const pageSize = 12;
   const offset = (currentPage - 1) * pageSize;
 
-  const { items: persons, meta } = page.id
-    ? await api.getPages('people.PersonPage', {
-        child_of: page.id.toString(),
-        limit: pageSize.toString(),
-        offset: offset.toString(),
+  const { items: persons, count } = page.id
+    ? await api.getPages({
+        type: 'people.PersonPage',
+        child_of: page.id,
+        limit: pageSize,
+        offset,
       })
-    : { items: [], meta: { total_count: 0 } };
+    : { items: [], count: 0 };
 
-  const totalPages = Math.ceil(meta.total_count / pageSize);
+  const totalPages = Math.ceil(count / pageSize);
 
   return (
     <>
@@ -37,16 +33,16 @@ export default async function PeopleIndexPage({
           {persons.map((person) => (
             <li key={person.id}>
               <ListingCard
-                url={person.meta.html_path}
+                url={getPath(person.meta.html_url)}
                 title={person.title}
-                image={person.image}
+                image={getRendition(person.image_listing)}
               />
             </li>
           ))}
         </ul>
       </div>
 
-      {meta.total_count > pageSize && (
+      {count > pageSize && (
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
