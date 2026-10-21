@@ -1,14 +1,14 @@
 import HeaderHero from '@/components/headers/HeaderHero';
-import type { breads } from '@/models';
+import { getRendition, type Page } from '@/lib/wagtail';
 import BaseStreamBlock from '../streamfield/BaseStreamBlock';
 import type { PageComponentProps } from './types';
 
 export default async function BreadPage({
   page,
-}: PageComponentProps<breads.BreadPage>) {
+}: PageComponentProps<Page<'breads.BreadPage'>>) {
   return (
     <>
-      <HeaderHero title={page.title} image={page.image} />
+      <HeaderHero title={page.title} image={getRendition(page.image_hero)} />
 
       <div className="container bread-detail">
         <div className="row">
@@ -45,7 +45,7 @@ export default async function BreadPage({
                       </p>
                     </>
                   )}
-                  {page.ingredients.length > 0 && (
+                  {page.ingredients && page.ingredients.length > 0 && (
                     <>
                       <h4>Ingredients</h4>
                       <ul>

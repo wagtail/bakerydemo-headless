@@ -3,12 +3,11 @@ import { describe, expect, it } from 'vitest';
 import ListingCard from '@/components/cards/ListingCard';
 
 const fakeImage = {
-  id: 1,
-  title: 'Test image',
-  meta: {
-    type: 'wagtailimages.Image',
-    download_url: '/media/images/test.jpg',
-  },
+  url: '/media/images/test.fill-180x180.jpg',
+  full_url: 'http://localhost:8000/media/images/test.fill-180x180.jpg',
+  width: 180,
+  height: 180,
+  alt: 'Test image',
 };
 
 describe('ListingCard', () => {

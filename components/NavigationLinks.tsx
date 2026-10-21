@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import type { wagtailcore } from '@/models';
+import { getPath, type PageDetail } from '@/lib/wagtail';
 
 type NavigationLinksProps = {
-  menuItems: wagtailcore.Page[];
+  menuItems: PageDetail[];
 };
 
 const SearchIcon = () => (
@@ -55,19 +55,19 @@ export function NavigationLinks({ menuItems }: NavigationLinksProps) {
     return normalizePath(pathname) === normalizePath(path) ? 'page' : undefined;
   };
 
-  const menuItemElements = menuItems.map((item) => (
-    <li
-      key={item.id}
-      className={`presentation ${item.title.toLowerCase().replace(/ /g, '')}${isActive(item.meta.html_path) ? ' active' : ''}`}
-    >
-      <Link
-        href={item.meta.html_path}
-        aria-current={isCurrentPage(item.meta.html_path)}
+  const menuItemElements = menuItems.map((item) => {
+    const path = getPath(item.meta.html_url);
+    return (
+      <li
+        key={item.id}
+        className={`presentation ${item.title.toLowerCase().replace(/ /g, '')}${isActive(path) ? ' active' : ''}`}
       >
-        {item.title}
-      </Link>
-    </li>
-  ));
+        <Link href={path} aria-current={isCurrentPage(path)}>
+          {item.title}
+        </Link>
+      </li>
+    );
+  });
 
   return (
     <div className="navigation" data-navigation="">

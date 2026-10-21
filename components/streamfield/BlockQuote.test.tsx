@@ -11,6 +11,7 @@ describe('BlockQuote', () => {
           id: 'test',
           value: {
             text: 'A great quote',
+            attribute_name: null,
             settings: { theme: 'highlight', text_size: 'large' },
           },
         }}
@@ -28,7 +29,11 @@ describe('BlockQuote', () => {
         block={{
           type: 'block_quote',
           id: 'test',
-          value: { text: 'Plain quote' },
+          value: {
+            text: 'Plain quote',
+            attribute_name: null,
+            settings: { theme: null, text_size: null },
+          },
         }}
       />,
     );
@@ -42,7 +47,11 @@ describe('BlockQuote', () => {
         block={{
           type: 'block_quote',
           id: 'test',
-          value: { text: 'Quote text', attribute_name: 'Mary Berry' },
+          value: {
+            text: 'Quote text',
+            attribute_name: 'Mary Berry',
+            settings: { theme: null, text_size: null },
+          },
         }}
       />,
     );
@@ -56,7 +65,11 @@ describe('BlockQuote', () => {
         block={{
           type: 'block_quote',
           id: 'test',
-          value: { text: 'No attribution' },
+          value: {
+            text: 'No attribution',
+            attribute_name: null,
+            settings: { theme: null, text_size: null },
+          },
         }}
       />,
     );

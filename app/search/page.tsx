@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import api from '@/lib/api';
+import { getPath } from '@/lib/wagtail';
 
 interface SearchPageProps {
   searchParams: Promise<{ q?: string }>;
@@ -28,7 +29,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { q: searchQuery } = await searchParams;
 
   const results = searchQuery
-    ? await api.getPages('wagtailcore.Page', { search: searchQuery })
+    ? await api.getPages({ search: searchQuery })
     : null;
 
   return (
@@ -49,7 +50,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                     <li key={result.id} className="listing-card">
                       <Link
                         className="listing-card__link"
-                        href={result.meta.html_path}
+                        href={getPath(result.meta.html_url)}
                       >
                         <div className="listing-card__contents">
                           <h3 className="listing-card__title">

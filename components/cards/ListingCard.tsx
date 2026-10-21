@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { wagtailimages } from '@/models';
+import type { ImageRendition } from '@/lib/wagtail';
 
 interface ListingCardMeta {
   label: string;
@@ -10,7 +10,7 @@ interface ListingCardMeta {
 interface ListingCardProps {
   url: string;
   title: string;
-  image?: wagtailimages.Image | null;
+  image?: ImageRendition | null;
   h2?: boolean;
   meta?: ListingCardMeta[];
 }
@@ -30,10 +30,10 @@ export default function ListingCard({
         {image && (
           <figure className="listing-card__image">
             <Image
-              src={image.meta.download_url}
-              alt={image.title}
-              width={180}
-              height={180}
+              src={image.full_url}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
               loading="lazy"
             />
           </figure>

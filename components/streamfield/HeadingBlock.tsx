@@ -1,9 +1,9 @@
-import type { blocks } from '@/models/blocks/base';
+import type { Block } from './types';
 
 export default function HeadingBlock({
   block: { value },
 }: {
-  block: blocks.HeadingBlock;
+  block: Block<'heading_block'>;
 }) {
   switch (value.size) {
     case 'h2':

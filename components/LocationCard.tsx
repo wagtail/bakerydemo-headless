@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { locations } from '@/models';
+import { getPath, getRendition, type Page } from '@/lib/wagtail';
 
 function truncateWords(text: string, count: number): string {
   const words = text.split(/\s+/);
@@ -9,20 +9,25 @@ function truncateWords(text: string, count: number): string {
 }
 
 interface LocationCardProps {
-  location: locations.LocationPage;
+  location: Page<'locations.LocationPage'>;
 }
 
 export default function LocationCard({ location }: LocationCardProps) {
+  const image = getRendition(location.image_location_card);
+
   return (
     <div className="location-card col-sm-4">
-      <Link className="location-card__link" href={location.meta.html_path}>
+      <Link
+        className="location-card__link"
+        href={getPath(location.meta.html_url)}
+      >
         <figure className="location-card__image">
-          {location.image && (
+          {image && (
             <Image
-              src={location.image.meta.download_url}
-              alt={location.image.title}
-              width={430}
-              height={320}
+              src={image.full_url}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
               sizes="(max-width: 768px) 150px, 400px"
               loading="lazy"
             />

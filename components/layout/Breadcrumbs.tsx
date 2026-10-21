@@ -1,9 +1,13 @@
 import Link from 'next/link';
-import type { wagtailcore } from '@/models';
+import type { components } from '@/lib/generated/schema';
+import { getPath } from '@/lib/wagtail';
 import ChevronIcon from './ChevronIcon';
 
 interface BreadcrumbsProps {
-  page: wagtailcore.Page;
+  page: {
+    title: string;
+    meta: { parent?: components['schemas']['SimpleBasePageSchema'] | null };
+  };
 }
 
 export default function Breadcrumbs({ page }: BreadcrumbsProps) {
@@ -12,12 +16,13 @@ export default function Breadcrumbs({ page }: BreadcrumbsProps) {
 
   const ancestors: Array<{ title: string; url: string }> = [];
 
-  const parentIsHome = parent.meta.html_path === '/';
+  const parentPath = getPath(parent.meta.html_url);
+  const parentIsHome = parentPath === '/';
   if (parentIsHome) {
     ancestors.push({ title: 'Home', url: '/' });
   } else {
     ancestors.push({ title: 'Home', url: '/' });
-    ancestors.push({ title: parent.title, url: parent.meta.html_path });
+    ancestors.push({ title: parent.title, url: parentPath });
   }
 
   return (

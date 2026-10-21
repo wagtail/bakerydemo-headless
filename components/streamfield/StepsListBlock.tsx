@@ -1,4 +1,4 @@
-import type { recipeBlocks } from '@/models/blocks/recipes';
+import type { RecipeBlock } from './types';
 
 const difficultyLabels = {
   S: 'Easy',
@@ -9,7 +9,7 @@ const difficultyLabels = {
 export default function StepsListBlock({
   block: { value },
 }: {
-  block: recipeBlocks.StepsList;
+  block: RecipeBlock<'steps_list'>;
 }) {
   return (
     <div>
@@ -17,8 +17,10 @@ export default function StepsListBlock({
       <ol>
         {value.map((step, i) => (
           <li key={i}>
-            <div dangerouslySetInnerHTML={{ __html: step.text }} />
-            <span>{difficultyLabels[step.difficulty]}</span>
+            <div dangerouslySetInnerHTML={{ __html: step.text ?? '' }} />
+            {step.difficulty && (
+              <span>{difficultyLabels[step.difficulty]}</span>
+            )}
           </li>
         ))}
       </ol>

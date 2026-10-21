@@ -1,20 +1,21 @@
 import Image from 'next/image';
-import type { blocks } from '@/models/blocks/base';
+import type { BaseBlock } from './types';
 
 export default function CaptionedImageBlock({
   block: { value },
 }: {
-  block: blocks.CaptionedImageBlock;
+  block: BaseBlock<'image_block'>;
 }) {
-  const { meta } = value.image;
+  if (!value.image) return null;
+  const { rendition } = value.image.meta;
 
   return (
     <figure>
       <Image
-        src={meta.download_url}
-        alt={value.image.title}
-        width={640}
-        height={480}
+        src={rendition.full_url}
+        alt={rendition.alt}
+        width={rendition.width}
+        height={rendition.height}
         loading="lazy"
       />
       <figcaption>

@@ -2,31 +2,27 @@ import ListingCard from '@/components/cards/ListingCard';
 import HeaderIndex from '@/components/headers/HeaderIndex';
 import Pagination from '@/components/Pagination';
 import api from '@/lib/api';
-import type { breads } from '@/models';
+import { getPath, getRendition, type Page } from '@/lib/wagtail';
 import type { PageComponentProps } from './types';
-
-interface BreadsIndexPageProps
-  extends PageComponentProps<breads.BreadsIndexPage> {
-  searchParams: Promise<{ page: string }>;
-}
 
 export default async function BreadsIndexPage({
   page,
   searchParams,
-}: BreadsIndexPageProps) {
+}: PageComponentProps<Page<'breads.BreadsIndexPage'>>) {
   const currentPage = Number((await searchParams)?.page || '1');
   const pageSize = 12;
   const offset = (currentPage - 1) * pageSize;
 
-  const { items: breads, meta } = page.id
-    ? await api.getPages('breads.BreadPage', {
-        child_of: page.id.toString(),
-        limit: pageSize.toString(),
-        offset: offset.toString(),
+  const { items: breads, count } = page.id
+    ? await api.getPages({
+        type: 'breads.BreadPage',
+        child_of: page.id,
+        limit: pageSize,
+        offset,
       })
-    : { items: [], meta: { total_count: 0 } };
+    : { items: [], count: 0 };
 
-  const totalPages = Math.ceil(meta.total_count / pageSize);
+  const totalPages = Math.ceil(count / pageSize);
 
   return (
     <>
@@ -37,9 +33,9 @@ export default async function BreadsIndexPage({
           {breads.map((bread) => (
             <li key={bread.id}>
               <ListingCard
-                url={bread.meta.html_path}
+                url={getPath(bread.meta.html_url)}
                 title={bread.title}
-                image={bread.image}
+                image={getRendition(bread.image_listing)}
                 h2
                 meta={[
                   ...(bread.origin
@@ -55,7 +51,7 @@ export default async function BreadsIndexPage({
         </ul>
       </div>
 
-      {meta.total_count > pageSize && (
+      {count > pageSize && (
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
