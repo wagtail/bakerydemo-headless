@@ -1,10 +1,10 @@
-import type { base } from '@/models';
+import { getPath, type Page } from '@/lib/wagtail';
 import BaseStreamBlock from '../streamfield/BaseStreamBlock';
 import type { PageComponentProps } from './types';
 
 export default async function FormPage({
   page,
-}: PageComponentProps<base.FormPage>) {
+}: PageComponentProps<Page<'base.FormPage'>>) {
   return (
     <>
       <div className="container">
@@ -21,7 +21,7 @@ export default async function FormPage({
       <div className="container">
         <div className="row">
           <div className="col-md-8 form-page">
-            <form action={page.meta.html_path} method="POST">
+            <form action={getPath(page.meta.html_url)} method="POST">
               {page.form_fields.map((field) => (
                 <div key={field.id} className="form-page__field">
                   <label htmlFor={`id_${field.id}`}>
@@ -38,7 +38,7 @@ export default async function FormPage({
                       required={field.required}
                       defaultValue={field.default_value || ''}
                     >
-                      {field.choices?.map((choice) => (
+                      {field.choices?.split(',').map((choice) => (
                         <option key={choice} value={choice}>
                           {choice}
                         </option>

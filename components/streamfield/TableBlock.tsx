@@ -1,10 +1,11 @@
-import type { recipeBlocks } from '@/models/blocks/recipes';
+import type { RecipeBlock } from './types';
 
 export default function TableBlock({
   block: { value },
 }: {
-  block: recipeBlocks.Table;
+  block: RecipeBlock<'table_block'>;
 }) {
+  if (!value) return null;
   const { first_row_is_table_header, data } = value;
 
   return (

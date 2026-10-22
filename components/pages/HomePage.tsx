@@ -5,49 +5,55 @@ import PictureCard from '@/components/cards/PictureCard';
 import LocationCard from '@/components/LocationCard';
 import ChevronIcon from '@/components/layout/ChevronIcon';
 import api from '@/lib/api';
-import type { base } from '@/models';
+import { getPath, getRendition, type Page } from '@/lib/wagtail';
 import BaseStreamBlock from '../streamfield/BaseStreamBlock';
 import type { PageComponentProps } from './types';
 
 export default async function HomePage({
   page,
-}: PageComponentProps<base.HomePage>) {
+}: PageComponentProps<Page<'base.HomePage'>>) {
   const featuredSection1Children = page.featured_section_1
     ? (
-        await api.getPages('breads.BreadPage', {
-          child_of: page.featured_section_1.id.toString(),
-          limit: '3',
+        await api.getPages({
+          type: 'breads.BreadPage',
+          child_of: page.featured_section_1.id,
+          limit: 3,
         })
       ).items
     : [];
 
   const featuredSection2Children = page.featured_section_2
     ? (
-        await api.getPages('locations.LocationPage', {
-          child_of: page.featured_section_2.id.toString(),
-          limit: '3',
+        await api.getPages({
+          type: 'locations.LocationPage',
+          child_of: page.featured_section_2.id,
+          limit: 3,
         })
       ).items
     : [];
 
   const featuredSection3Children = page.featured_section_3
     ? (
-        await api.getPages('blog.BlogPage', {
-          child_of: page.featured_section_3.id.toString(),
-          limit: '6',
+        await api.getPages({
+          type: 'blog.BlogPage',
+          child_of: page.featured_section_3.id,
+          limit: 6,
         })
       ).items
     : [];
 
+  const heroImage = getRendition(page.image_hero);
+  const leadImage = getRendition(page.lead_image_promo);
+
   return (
     <div className="homepage">
       <div className="container-fluid hero">
-        {page.image && (
+        {heroImage && (
           <Image
-            src={page.image.meta.download_url}
+            src={heroImage.full_url}
             alt=""
-            width={1920}
-            height={900}
+            width={heroImage.width}
+            height={heroImage.height}
             sizes="100vw"
             className="hero-image"
             priority
@@ -61,7 +67,7 @@ export default async function HomePage({
               <p className="lead">{page.hero_text}</p>
               {page.hero_cta_link ? (
                 <Link
-                  href={page.hero_cta_link.meta.html_path}
+                  href={getPath(page.hero_cta_link.meta.html_url)}
                   className="hero-cta-link"
                 >
                   {page.hero_cta}
@@ -86,9 +92,9 @@ export default async function HomePage({
                   {featuredSection1Children.map((child) => (
                     <li key={child.id}>
                       <ListingCard
-                        url={child.meta.html_path}
+                        url={getPath(child.meta.html_url)}
                         title={child.title}
-                        image={child.image}
+                        image={getRendition(child.image_listing)}
                         meta={[
                           ...(child.origin
                             ? [
@@ -120,7 +126,7 @@ export default async function HomePage({
           </div>
 
           <div className="col-sm-6 promo">
-            {(page.lead_image || page.lead_title || page.lead_text) && (
+            {(leadImage || page.lead_title || page.lead_text) && (
               <div className="col-lg-10 promo-text">
                 {page.lead_title && <h2>{page.lead_title}</h2>}
                 {page.lead_text && (
@@ -128,13 +134,13 @@ export default async function HomePage({
                 )}
               </div>
             )}
-            {page.lead_image && (
+            {leadImage && (
               <figure>
                 <Image
-                  src={page.lead_image.meta.download_url}
-                  alt={page.lead_image.title}
-                  width={590}
-                  height={413}
+                  src={leadImage.full_url}
+                  alt={leadImage.alt}
+                  width={leadImage.width}
+                  height={leadImage.height}
                 />
               </figure>
             )}
@@ -181,9 +187,9 @@ export default async function HomePage({
                   {featuredSection3Children.map((child) => (
                     <PictureCard
                       key={child.id}
-                      url={child.meta.html_path}
+                      url={getPath(child.meta.html_url)}
                       title={child.title}
-                      image={child.image!}
+                      image={getRendition(child.image_picture_card)}
                       portrait
                     />
                   ))}

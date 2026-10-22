@@ -1,35 +1,27 @@
-import Image from 'next/image';
-import type { recipeBlocks } from '@/models/blocks/recipes';
+import { ImageBlockImage } from './ImageBlock';
+import type { RecipeBlock } from './types';
+
+type Cell =
+  RecipeBlock<'typed_table_block'>['value']['rows'][number]['values'][number];
+
+function renderCell(cell: Cell) {
+  if (cell === null) return null;
+  switch (typeof cell) {
+    case 'string':
+      return <div dangerouslySetInnerHTML={{ __html: cell }} />;
+    case 'number':
+      return cell.toString();
+    case 'object':
+      return <ImageBlockImage value={cell} />;
+  }
+}
 
 export default function TypedTableBlock({
   block: { value },
 }: {
-  block: recipeBlocks.TypedTable;
+  block: RecipeBlock<'typed_table_block'>;
 }) {
   const { caption, columns, rows } = value;
-
-  const renderCell = (
-    cell: recipeBlocks.TypedTable['value']['rows'][number]['values'][number],
-  ) => {
-    switch (typeof cell) {
-      case 'string':
-        return <div dangerouslySetInnerHTML={{ __html: cell }} />;
-      case 'number':
-        return cell.toString();
-      case 'object':
-        if ('id' in cell) {
-          return (
-            <Image
-              src={cell.meta.download_url}
-              alt={cell.title}
-              width={100}
-              height={100}
-            />
-          );
-        }
-        return <pre>{JSON.stringify(cell, null, 2)}</pre>;
-    }
-  };
 
   return (
     <figure>

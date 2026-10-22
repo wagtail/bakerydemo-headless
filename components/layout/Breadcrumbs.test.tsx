@@ -7,30 +7,15 @@ function makePage(overrides: {
   parent?: { id: number; title: string; html_url: string } | null;
 }) {
   return {
-    id: 10,
     title: overrides.title,
     meta: {
-      type: 'base.StandardPage',
-      html_url: 'http://localhost/',
-      html_path: '/',
-      slug: 'test',
-      show_in_menus: true,
-      seo_title: '',
-      search_description: '',
-      first_published_at: null,
-      alias_of: null,
-      locale: 'en',
       parent: overrides.parent
         ? {
             id: overrides.parent.id,
             title: overrides.parent.title,
             meta: {
-              type: 'wagtailcore.Page',
+              type: 'base.HomePage',
               html_url: overrides.parent.html_url,
-              html_path: overrides.parent.html_url.replace(
-                /^https?:\/\/[^/]+/,
-                '',
-              ),
             },
           }
         : null,

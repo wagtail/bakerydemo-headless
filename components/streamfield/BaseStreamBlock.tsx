@@ -1,24 +1,28 @@
-import type { blocks } from '@/models/blocks/base';
 import BlockQuote from './BlockQuote';
 import CaptionedImageBlock from './CaptionedImageBlock';
 import EmbedBlock from './EmbedBlock';
 import HeadingBlock from './HeadingBlock';
 import RichTextBlock from './RichTextBlock';
+import type { BaseBlock, BaseStreamBlockValue } from './types';
 
-const blockComponents = {
+type BlockType = BaseStreamBlockValue[number]['type'];
+
+const blockComponents: {
+  [T in BlockType]: React.ComponentType<{ block: BaseBlock<T> }>;
+} = {
   heading_block: HeadingBlock,
   paragraph_block: RichTextBlock,
   image_block: CaptionedImageBlock,
   block_quote: BlockQuote,
   embed_block: EmbedBlock,
-} as const;
+};
 
 type BlockComponent = React.ComponentType<{
-  block: blocks.BaseStreamBlock[number];
+  block: BaseStreamBlockValue[number];
 }>;
 
 interface BaseStreamBlockProps {
-  blocks: blocks.BaseStreamBlock;
+  blocks: BaseStreamBlockValue;
 }
 
 export default function BaseStreamBlock({ blocks }: BaseStreamBlockProps) {

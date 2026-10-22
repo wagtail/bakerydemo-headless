@@ -1,9 +1,9 @@
-import type { blocks } from '@/models/blocks/base';
+import type { Block } from './types';
 
 export default function RichTextBlock({
   block,
 }: {
-  block: blocks.RichTextBlock;
+  block: Block<'paragraph_block'>;
 }) {
-  return <div dangerouslySetInnerHTML={{ __html: block.value }} />;
+  return <div dangerouslySetInnerHTML={{ __html: block.value ?? '' }} />;
 }
