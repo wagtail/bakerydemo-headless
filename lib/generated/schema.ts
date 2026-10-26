@@ -24,7 +24,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Find page */
+        /**
+         * Find page
+         * @description Redirects (302) to the detail endpoint of the matching page. HTTP clients that follow redirects receive the page detail.
+         */
         get: operations["pages_find"];
         put?: never;
         post?: never;
@@ -858,7 +861,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Find redirect */
+        /**
+         * Find redirect
+         * @description Redirects (302) to the detail endpoint of the matching redirect. HTTP clients that follow redirects receive the redirect detail.
+         */
         get: operations["redirects_find"];
         put?: never;
         post?: never;
@@ -1228,7 +1234,7 @@ export interface components {
             meta: components["schemas"]["BlogPersonRelationshipMetaSchema"];
             /** ID */
             id?: number | null;
-            page?: components["schemas"]["PageLink"] | null;
+            page?: components["schemas"]["SimpleBasePageSchema"];
             person?: components["schemas"]["PersonForeignKeySchema"];
         };
         /** BreadIngredientForeignKeyMetaSchema */
@@ -1650,7 +1656,7 @@ export interface components {
              */
             featured_section_3_title?: string | null;
             image?: components["schemas"]["ImageForeignKeySchema"] | null;
-            hero_cta_link?: components["schemas"]["PageLink"] | null;
+            hero_cta_link?: components["schemas"]["SimpleBasePageSchema"] | null;
             /**
              * Body
              * @default []
@@ -1659,9 +1665,9 @@ export interface components {
             lead_image?: components["schemas"]["ImageForeignKeySchema"] | null;
             /** Lead Text */
             lead_text?: string | null;
-            featured_section_1?: components["schemas"]["PageLink"] | null;
-            featured_section_2?: components["schemas"]["PageLink"] | null;
-            featured_section_3?: components["schemas"]["PageLink"] | null;
+            featured_section_1?: components["schemas"]["SimpleBasePageSchema"] | null;
+            featured_section_2?: components["schemas"]["SimpleBasePageSchema"] | null;
+            featured_section_3?: components["schemas"]["SimpleBasePageSchema"] | null;
             /** Image Hero */
             image_hero?: components["schemas"]["ImageRenditionDict"] | components["schemas"]["ImageRenditionErrorDict"] | null;
             /** Lead Image Promo */
@@ -1874,21 +1880,8 @@ export interface components {
             introduction?: string | null;
             image?: components["schemas"]["ImageForeignKeySchema"] | null;
         };
-        /** PageLink */
-        PageLink: {
-            /** Id */
-            id: number;
-            /** Title */
-            title: string;
-            meta: components["schemas"]["PageLinkMeta"];
-        };
-        /** PageLinkMeta */
-        PageLinkMeta: {
-            /** Type */
-            type: string;
-            /** Html Url */
-            html_url: string | null;
-        };
+        /** @description A union of models, discriminated by the content type in `meta.type`. */
+        PageDetailUnion: components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
         /** PageMetaSchema */
         PageMetaSchema: {
             /**
@@ -2177,7 +2170,7 @@ export interface components {
             meta: components["schemas"]["RecipePersonRelationshipMetaSchema"];
             /** ID */
             id?: number | null;
-            page?: components["schemas"]["PageLink"] | null;
+            page?: components["schemas"]["SimpleBasePageSchema"];
             person?: components["schemas"]["PersonForeignKeySchema"];
         };
         /** RecipeStepBlock */
@@ -3001,6 +2994,8 @@ export interface components {
              */
             show_in_menus: boolean | null;
         };
+        /** @description A union of models, discriminated by the content type in `meta.type`. */
+        PageCreateUnion: components["schemas"]["StandardPageCreateSchema"] | components["schemas"]["HomePageCreateSchema"] | components["schemas"]["GalleryPageCreateSchema"] | components["schemas"]["FormPageCreateSchema"] | components["schemas"]["BlogPageCreateSchema"] | components["schemas"]["BlogIndexPageCreateSchema"] | components["schemas"]["BreadPageCreateSchema"] | components["schemas"]["BreadsIndexPageCreateSchema"] | components["schemas"]["LocationsIndexPageCreateSchema"] | components["schemas"]["LocationPageCreateSchema"] | components["schemas"]["RecipePageCreateSchema"] | components["schemas"]["RecipeIndexPageCreateSchema"] | components["schemas"]["PersonPageCreateSchema"] | components["schemas"]["PeopleIndexPageCreateSchema"];
         /** PeopleIndexPageCreateMetaSchema */
         PeopleIndexPageCreateMetaSchema: {
             /**
@@ -3876,6 +3871,8 @@ export interface components {
              */
             show_in_menus: boolean | null;
         };
+        /** @description A union of models, discriminated by the content type in `meta.type`. */
+        PageUpdateUnion: components["schemas"]["StandardPagePatchSchema"] | components["schemas"]["HomePagePatchSchema"] | components["schemas"]["GalleryPagePatchSchema"] | components["schemas"]["FormPagePatchSchema"] | components["schemas"]["BlogPagePatchSchema"] | components["schemas"]["BlogIndexPagePatchSchema"] | components["schemas"]["BreadPagePatchSchema"] | components["schemas"]["BreadsIndexPagePatchSchema"] | components["schemas"]["LocationsIndexPagePatchSchema"] | components["schemas"]["LocationPagePatchSchema"] | components["schemas"]["RecipePagePatchSchema"] | components["schemas"]["RecipeIndexPagePatchSchema"] | components["schemas"]["PersonPagePatchSchema"] | components["schemas"]["PeopleIndexPagePatchSchema"];
         /** PeopleIndexPagePatchMetaSchema */
         PeopleIndexPagePatchMetaSchema: {
             /** Type */
@@ -4172,11 +4169,7 @@ export interface components {
             approved_go_live_at?: string | null;
             content_type: components["schemas"]["ContentTypeSchema"];
             base_content_type: components["schemas"]["ContentTypeSchema"];
-            /**
-             * Content Object
-             * @description A union of models, discriminated by the content type in `meta.type`.
-             */
-            content_object: components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+            content_object: components["schemas"]["PageDetailUnion"];
         };
         /** WorkflowStateDetailSchema */
         WorkflowStateDetailSchema: {
@@ -4536,10 +4529,10 @@ export interface components {
             /** Body */
             body?: string | null;
         };
-        /** PagedAnnotated */
-        PagedAnnotated: {
+        /** PagedSnippetDetailUnion */
+        PagedSnippetDetailUnion: {
             /** Items */
-            items: (components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"])[];
+            items: components["schemas"]["SnippetDetailUnion"][];
             /** Count */
             count: number;
         };
@@ -4572,6 +4565,8 @@ export interface components {
             /** Image Listing */
             image_listing?: components["schemas"]["ImageRenditionDict"] | components["schemas"]["ImageRenditionErrorDict"] | null;
         };
+        /** @description A union of models, discriminated by the content type in `meta.type`. */
+        SnippetDetailUnion: components["schemas"]["BreadIngredientSchema"] | components["schemas"]["BreadTypeSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
         /** BreadIngredientCreateMetaSchema */
         BreadIngredientCreateMetaSchema: {
             /** Type */
@@ -4614,6 +4609,8 @@ export interface components {
         PersonCreateSchema: {
             meta?: components["schemas"]["PersonCreateMetaSchema"] | null;
         };
+        /** @description A union of models, discriminated by the content type in `meta.type`. */
+        SnippetCreateUnion: components["schemas"]["BreadIngredientCreateSchema"] | components["schemas"]["BreadTypeCreateSchema"] | components["schemas"]["FooterTextCreateSchema"] | components["schemas"]["PersonCreateSchema"];
         /** BreadIngredientPatchMetaSchema */
         BreadIngredientPatchMetaSchema: {
             /** Type */
@@ -4656,6 +4653,10 @@ export interface components {
         PersonPatchSchema: {
             meta?: components["schemas"]["PersonPatchMetaSchema"] | null;
         };
+        /** @description A union of models, discriminated by the content type in `meta.type`. */
+        SnippetUpdateUnion: components["schemas"]["BreadIngredientPatchSchema"] | components["schemas"]["BreadTypePatchSchema"] | components["schemas"]["FooterTextPatchSchema"] | components["schemas"]["PersonPatchSchema"];
+        /** @description A union of models, discriminated by the content type in `meta.type`. */
+        RevisionMixinSnippetDetailUnion: components["schemas"]["BreadIngredientSchema"] | components["schemas"]["BreadTypeSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
         /** SnippetRevisionDetailSchema */
         SnippetRevisionDetailSchema: {
             meta: components["schemas"]["BaseMetaSchema"];
@@ -4676,12 +4677,10 @@ export interface components {
             approved_go_live_at?: string | null;
             content_type: components["schemas"]["ContentTypeSchema"];
             base_content_type: components["schemas"]["ContentTypeSchema"];
-            /**
-             * Content Object
-             * @description A union of models, discriminated by the content type in `meta.type`.
-             */
-            content_object: components["schemas"]["BreadIngredientSchema"] | components["schemas"]["BreadTypeSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
+            content_object: components["schemas"]["RevisionMixinSnippetDetailUnion"];
         };
+        /** @description A union of models, discriminated by the content type in `meta.type`. */
+        DraftStateMixinSnippetDetailUnion: components["schemas"]["BreadIngredientSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
         /** SnippetRevertSchema */
         SnippetRevertSchema: {
             /** Revision Id */
@@ -4883,6 +4882,11 @@ export interface components {
             automatically_created: boolean;
             /** Created At */
             created_at: string | null;
+            /**
+             * Location
+             * @description The URL to redirect to, from either the redirect page (and route path) or the redirect link.
+             */
+            location: string | null;
         };
         /** RedirectInputSchema */
         RedirectInputSchema: {
@@ -4907,6 +4911,13 @@ export interface components {
              * @default
              */
             redirect_link: string;
+        };
+        /** PagedPageDetailUnion */
+        PagedPageDetailUnion: {
+            /** Items */
+            items: components["schemas"]["PageDetailUnion"][];
+            /** Count */
+            count: number;
         };
     };
     responses: never;
@@ -4971,8 +4982,7 @@ export type LocationPageMetaSchema = components['schemas']['LocationPageMetaSche
 export type LocationPageSchema = components['schemas']['LocationPageSchema'];
 export type LocationsIndexPageMetaSchema = components['schemas']['LocationsIndexPageMetaSchema'];
 export type LocationsIndexPageSchema = components['schemas']['LocationsIndexPageSchema'];
-export type PageLink = components['schemas']['PageLink'];
-export type PageLinkMeta = components['schemas']['PageLinkMeta'];
+export type PageDetailUnion = components['schemas']['PageDetailUnion'];
 export type PageMetaSchema = components['schemas']['PageMetaSchema'];
 export type PageSchema = components['schemas']['PageSchema'];
 export type PeopleIndexPageMetaSchema = components['schemas']['PeopleIndexPageMetaSchema'];
@@ -5042,6 +5052,7 @@ export type LocationPageCreateMetaSchema = components['schemas']['LocationPageCr
 export type LocationPageCreateSchema = components['schemas']['LocationPageCreateSchema'];
 export type LocationsIndexPageCreateMetaSchema = components['schemas']['LocationsIndexPageCreateMetaSchema'];
 export type LocationsIndexPageCreateSchema = components['schemas']['LocationsIndexPageCreateSchema'];
+export type PageCreateUnion = components['schemas']['PageCreateUnion'];
 export type PeopleIndexPageCreateMetaSchema = components['schemas']['PeopleIndexPageCreateMetaSchema'];
 export type PeopleIndexPageCreateSchema = components['schemas']['PeopleIndexPageCreateSchema'];
 export type PersonPageCreateMetaSchema = components['schemas']['PersonPageCreateMetaSchema'];
@@ -5094,6 +5105,7 @@ export type LocationPagePatchMetaSchema = components['schemas']['LocationPagePat
 export type LocationPagePatchSchema = components['schemas']['LocationPagePatchSchema'];
 export type LocationsIndexPagePatchMetaSchema = components['schemas']['LocationsIndexPagePatchMetaSchema'];
 export type LocationsIndexPagePatchSchema = components['schemas']['LocationsIndexPagePatchSchema'];
+export type PageUpdateUnion = components['schemas']['PageUpdateUnion'];
 export type PeopleIndexPagePatchMetaSchema = components['schemas']['PeopleIndexPagePatchMetaSchema'];
 export type PeopleIndexPagePatchSchema = components['schemas']['PeopleIndexPagePatchSchema'];
 export type PersonPagePatchMetaSchema = components['schemas']['PersonPagePatchMetaSchema'];
@@ -5143,9 +5155,10 @@ export type BreadTypeMetaSchema = components['schemas']['BreadTypeMetaSchema'];
 export type BreadTypeSchema = components['schemas']['BreadTypeSchema'];
 export type FooterTextMetaSchema = components['schemas']['FooterTextMetaSchema'];
 export type FooterTextSchema = components['schemas']['FooterTextSchema'];
-export type PagedAnnotated = components['schemas']['PagedAnnotated'];
+export type PagedSnippetDetailUnion = components['schemas']['PagedSnippetDetailUnion'];
 export type PersonMetaSchema = components['schemas']['PersonMetaSchema'];
 export type PersonSchema = components['schemas']['PersonSchema'];
+export type SnippetDetailUnion = components['schemas']['SnippetDetailUnion'];
 export type BreadIngredientCreateMetaSchema = components['schemas']['BreadIngredientCreateMetaSchema'];
 export type BreadIngredientCreateSchema = components['schemas']['BreadIngredientCreateSchema'];
 export type BreadTypeCreateMetaSchema = components['schemas']['BreadTypeCreateMetaSchema'];
@@ -5154,6 +5167,7 @@ export type FooterTextCreateMetaSchema = components['schemas']['FooterTextCreate
 export type FooterTextCreateSchema = components['schemas']['FooterTextCreateSchema'];
 export type PersonCreateMetaSchema = components['schemas']['PersonCreateMetaSchema'];
 export type PersonCreateSchema = components['schemas']['PersonCreateSchema'];
+export type SnippetCreateUnion = components['schemas']['SnippetCreateUnion'];
 export type BreadIngredientPatchMetaSchema = components['schemas']['BreadIngredientPatchMetaSchema'];
 export type BreadIngredientPatchSchema = components['schemas']['BreadIngredientPatchSchema'];
 export type BreadTypePatchMetaSchema = components['schemas']['BreadTypePatchMetaSchema'];
@@ -5162,7 +5176,10 @@ export type FooterTextPatchMetaSchema = components['schemas']['FooterTextPatchMe
 export type FooterTextPatchSchema = components['schemas']['FooterTextPatchSchema'];
 export type PersonPatchMetaSchema = components['schemas']['PersonPatchMetaSchema'];
 export type PersonPatchSchema = components['schemas']['PersonPatchSchema'];
+export type SnippetUpdateUnion = components['schemas']['SnippetUpdateUnion'];
+export type RevisionMixinSnippetDetailUnion = components['schemas']['RevisionMixinSnippetDetailUnion'];
 export type SnippetRevisionDetailSchema = components['schemas']['SnippetRevisionDetailSchema'];
+export type DraftStateMixinSnippetDetailUnion = components['schemas']['DraftStateMixinSnippetDetailUnion'];
 export type SnippetRevertSchema = components['schemas']['SnippetRevertSchema'];
 export type SnippetCopyForTranslationSchema = components['schemas']['SnippetCopyForTranslationSchema'];
 export type DocumentDetailMetaSchema = components['schemas']['DocumentDetailMetaSchema'];
@@ -5181,6 +5198,7 @@ export type LocaleInputSchema = components['schemas']['LocaleInputSchema'];
 export type PagedRedirectSchema = components['schemas']['PagedRedirectSchema'];
 export type RedirectSchema = components['schemas']['RedirectSchema'];
 export type RedirectInputSchema = components['schemas']['RedirectInputSchema'];
+export type PagedPageDetailUnion = components['schemas']['PagedPageDetailUnion'];
 export type $defs = Record<string, never>;
 export interface operations {
     pages_list: {
@@ -5227,7 +5245,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["StandardPageCreateSchema"] | components["schemas"]["HomePageCreateSchema"] | components["schemas"]["GalleryPageCreateSchema"] | components["schemas"]["FormPageCreateSchema"] | components["schemas"]["BlogPageCreateSchema"] | components["schemas"]["BlogIndexPageCreateSchema"] | components["schemas"]["BreadPageCreateSchema"] | components["schemas"]["BreadsIndexPageCreateSchema"] | components["schemas"]["LocationsIndexPageCreateSchema"] | components["schemas"]["LocationPageCreateSchema"] | components["schemas"]["RecipePageCreateSchema"] | components["schemas"]["RecipeIndexPageCreateSchema"] | components["schemas"]["PersonPageCreateSchema"] | components["schemas"]["PeopleIndexPageCreateSchema"];
+                "application/json": components["schemas"]["PageCreateUnion"];
             };
         };
         responses: {
@@ -5237,7 +5255,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5262,8 +5280,15 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
+            };
+            /** @description Found */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -5287,7 +5312,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5325,7 +5350,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["StandardPagePatchSchema"] | components["schemas"]["HomePagePatchSchema"] | components["schemas"]["GalleryPagePatchSchema"] | components["schemas"]["FormPagePatchSchema"] | components["schemas"]["BlogPagePatchSchema"] | components["schemas"]["BlogIndexPagePatchSchema"] | components["schemas"]["BreadPagePatchSchema"] | components["schemas"]["BreadsIndexPagePatchSchema"] | components["schemas"]["LocationsIndexPagePatchSchema"] | components["schemas"]["LocationPagePatchSchema"] | components["schemas"]["RecipePagePatchSchema"] | components["schemas"]["RecipeIndexPagePatchSchema"] | components["schemas"]["PersonPagePatchSchema"] | components["schemas"]["PeopleIndexPagePatchSchema"];
+                "application/json": components["schemas"]["PageUpdateUnion"];
             };
         };
         responses: {
@@ -5335,7 +5360,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5458,7 +5483,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5484,7 +5509,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5510,7 +5535,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5536,7 +5561,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5582,7 +5607,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5604,7 +5629,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5630,7 +5655,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5656,7 +5681,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -5982,7 +6007,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PagedAnnotated"];
+                    "application/json": components["schemas"]["PagedSnippetDetailUnion"];
                 };
             };
         };
@@ -6000,7 +6025,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["BreadIngredientCreateSchema"] | components["schemas"]["BreadTypeCreateSchema"] | components["schemas"]["FooterTextCreateSchema"] | components["schemas"]["PersonCreateSchema"];
+                "application/json": components["schemas"]["SnippetCreateUnion"];
             };
         };
         responses: {
@@ -6010,7 +6035,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BreadIngredientSchema"] | components["schemas"]["BreadTypeSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
+                    "application/json": components["schemas"]["SnippetDetailUnion"];
                 };
             };
         };
@@ -6036,7 +6061,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BreadIngredientSchema"] | components["schemas"]["BreadTypeSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
+                    "application/json": components["schemas"]["SnippetDetailUnion"];
                 };
             };
         };
@@ -6076,7 +6101,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["BreadIngredientPatchSchema"] | components["schemas"]["BreadTypePatchSchema"] | components["schemas"]["FooterTextPatchSchema"] | components["schemas"]["PersonPatchSchema"];
+                "application/json": components["schemas"]["SnippetUpdateUnion"];
             };
         };
         responses: {
@@ -6086,7 +6111,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BreadIngredientSchema"] | components["schemas"]["BreadTypeSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
+                    "application/json": components["schemas"]["SnippetDetailUnion"];
                 };
             };
         };
@@ -6235,7 +6260,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BreadIngredientSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
+                    "application/json": components["schemas"]["DraftStateMixinSnippetDetailUnion"];
                 };
             };
         };
@@ -6258,7 +6283,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BreadIngredientSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
+                    "application/json": components["schemas"]["DraftStateMixinSnippetDetailUnion"];
                 };
             };
         };
@@ -6285,7 +6310,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BreadIngredientSchema"] | components["schemas"]["BreadTypeSchema"] | components["schemas"]["FooterTextSchema"] | components["schemas"]["PersonSchema"];
+                    "application/json": components["schemas"]["RevisionMixinSnippetDetailUnion"];
                 };
             };
         };
@@ -6893,6 +6918,13 @@ export interface operations {
                     "application/json": components["schemas"]["RedirectSchema"];
                 };
             };
+            /** @description Found */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     redirects_detail: {
@@ -6981,7 +7013,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageSchema"] | components["schemas"]["StandardPageSchema"] | components["schemas"]["HomePageSchema"] | components["schemas"]["GalleryPageSchema"] | components["schemas"]["FormPageSchema"] | components["schemas"]["BlogPageSchema"] | components["schemas"]["BlogIndexPageSchema"] | components["schemas"]["BreadPageSchema"] | components["schemas"]["BreadsIndexPageSchema"] | components["schemas"]["LocationsIndexPageSchema"] | components["schemas"]["LocationPageSchema"] | components["schemas"]["RecipePageSchema"] | components["schemas"]["RecipeIndexPageSchema"] | components["schemas"]["PersonPageSchema"] | components["schemas"]["PeopleIndexPageSchema"];
+                    "application/json": components["schemas"]["PageDetailUnion"];
                 };
             };
         };
@@ -7014,7 +7046,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PagedAnnotated"];
+                    "application/json": components["schemas"]["PagedPageDetailUnion"];
                 };
             };
         };

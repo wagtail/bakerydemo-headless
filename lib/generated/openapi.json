@@ -290,55 +290,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -351,52 +303,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "A union of models, discriminated by the content type in `meta.type`.",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/StandardPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/HomePageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/GalleryPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/FormPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BlogPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BlogIndexPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BreadPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BreadsIndexPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/LocationsIndexPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/LocationPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/RecipePageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/RecipeIndexPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/PersonPageCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/PeopleIndexPageCreateSchema"
-                  }
-                ],
-                "title": "Data"
+                "$ref": "#/components/schemas/PageCreateUnion"
               }
             }
           },
@@ -491,60 +398,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
+          },
+          "302": {
+            "description": "Found"
           }
         },
+        "description": "Redirects (302) to the detail endpoint of the matching page. HTTP clients that follow redirects receive the page detail.",
         "tags": [
           "pages"
         ],
@@ -622,55 +485,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -730,55 +545,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -791,52 +558,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "A union of models, discriminated by the content type in `meta.type`.",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/StandardPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/HomePagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/GalleryPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/FormPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BlogPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BlogIndexPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BreadPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BreadsIndexPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/LocationsIndexPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/LocationPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/RecipePagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/RecipeIndexPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/PersonPagePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/PeopleIndexPagePatchSchema"
-                  }
-                ],
-                "title": "Data"
+                "$ref": "#/components/schemas/PageUpdateUnion"
               }
             }
           },
@@ -1207,55 +929,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -1293,55 +967,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -1396,55 +1022,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -1503,55 +1081,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -1630,55 +1160,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -1726,55 +1208,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -1812,55 +1246,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -1917,55 +1303,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -2663,7 +2001,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PagedAnnotated"
+                  "$ref": "#/components/schemas/PagedSnippetDetailUnion"
                 }
               }
             }
@@ -2726,22 +2064,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BreadIngredientSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadTypeSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FooterTextSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/SnippetDetailUnion"
                 }
               }
             }
@@ -2754,22 +2077,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "A union of models, discriminated by the content type in `meta.type`.",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/BreadIngredientCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BreadTypeCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/FooterTextCreateSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/PersonCreateSchema"
-                  }
-                ],
-                "title": "Data"
+                "$ref": "#/components/schemas/SnippetCreateUnion"
               }
             }
           },
@@ -2854,22 +2162,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BreadIngredientSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadTypeSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FooterTextSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/SnippetDetailUnion"
                 }
               }
             }
@@ -2941,22 +2234,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BreadIngredientSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadTypeSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FooterTextSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/SnippetDetailUnion"
                 }
               }
             }
@@ -2969,22 +2247,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "A union of models, discriminated by the content type in `meta.type`.",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/BreadIngredientPatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/BreadTypePatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/FooterTextPatchSchema"
-                  },
-                  {
-                    "$ref": "#/components/schemas/PersonPatchSchema"
-                  }
-                ],
-                "title": "Data"
+                "$ref": "#/components/schemas/SnippetUpdateUnion"
               }
             }
           },
@@ -3475,19 +2738,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BreadIngredientSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FooterTextSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/DraftStateMixinSnippetDetailUnion"
                 }
               }
             }
@@ -3538,19 +2789,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BreadIngredientSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FooterTextSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/DraftStateMixinSnippetDetailUnion"
                 }
               }
             }
@@ -3602,22 +2841,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/BreadIngredientSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadTypeSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FooterTextSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/RevisionMixinSnippetDetailUnion"
                 }
               }
             }
@@ -4952,8 +4176,12 @@
                 }
               }
             }
+          },
+          "302": {
+            "description": "Found"
           }
         },
+        "description": "Redirects (302) to the detail endpoint of the matching redirect. HTTP clients that follow redirects receive the redirect detail.",
         "tags": [
           "redirects"
         ],
@@ -5127,55 +4355,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "A union of models, discriminated by the content type in `meta.type`.",
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/PageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/StandardPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/HomePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/GalleryPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/FormPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BlogIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/LocationPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipePageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PersonPageSchema"
-                    },
-                    {
-                      "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                    }
-                  ],
-                  "title": "Response"
+                  "$ref": "#/components/schemas/PageDetailUnion"
                 }
               }
             }
@@ -5427,7 +4607,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PagedAnnotated"
+                  "$ref": "#/components/schemas/PagedPageDetailUnion"
                 }
               }
             }
@@ -6551,12 +5731,9 @@
             "title": "ID"
           },
           "page": {
-            "anyOf": [
+            "allOf": [
               {
-                "$ref": "#/components/schemas/PageLink"
-              },
-              {
-                "type": "null"
+                "$ref": "#/components/schemas/SimpleBasePageSchema"
               }
             ]
           },
@@ -8307,7 +7484,7 @@
           "hero_cta_link": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/PageLink"
+                "$ref": "#/components/schemas/SimpleBasePageSchema"
               },
               {
                 "type": "null"
@@ -8386,7 +7563,7 @@
           "featured_section_1": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/PageLink"
+                "$ref": "#/components/schemas/SimpleBasePageSchema"
               },
               {
                 "type": "null"
@@ -8396,7 +7573,7 @@
           "featured_section_2": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/PageLink"
+                "$ref": "#/components/schemas/SimpleBasePageSchema"
               },
               {
                 "type": "null"
@@ -8406,7 +7583,7 @@
           "featured_section_3": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/PageLink"
+                "$ref": "#/components/schemas/SimpleBasePageSchema"
               },
               {
                 "type": "null"
@@ -9185,52 +8362,55 @@
         "title": "LocationsIndexPageSchema",
         "type": "object"
       },
-      "PageLink": {
-        "properties": {
-          "id": {
-            "title": "Id",
-            "type": "integer"
+      "PageDetailUnion": {
+        "description": "A union of models, discriminated by the content type in `meta.type`.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PageSchema"
           },
-          "title": {
-            "title": "Title",
-            "type": "string"
+          {
+            "$ref": "#/components/schemas/StandardPageSchema"
           },
-          "meta": {
-            "$ref": "#/components/schemas/PageLinkMeta"
+          {
+            "$ref": "#/components/schemas/HomePageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/GalleryPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/FormPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BlogPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BlogIndexPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadsIndexPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/LocationsIndexPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/LocationPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/RecipePageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/RecipeIndexPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PersonPageSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PeopleIndexPageSchema"
           }
-        },
-        "required": [
-          "id",
-          "title",
-          "meta"
-        ],
-        "title": "PageLink",
-        "type": "object"
-      },
-      "PageLinkMeta": {
-        "properties": {
-          "type": {
-            "title": "Type",
-            "type": "string"
-          },
-          "html_url": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Html Url"
-          }
-        },
-        "required": [
-          "type",
-          "html_url"
-        ],
-        "title": "PageLinkMeta",
-        "type": "object"
+        ]
       },
       "PageMetaSchema": {
         "properties": {
@@ -10514,12 +9694,9 @@
             "title": "ID"
           },
           "page": {
-            "anyOf": [
+            "allOf": [
               {
-                "$ref": "#/components/schemas/PageLink"
-              },
-              {
-                "type": "null"
+                "$ref": "#/components/schemas/SimpleBasePageSchema"
               }
             ]
           },
@@ -12923,6 +12100,53 @@
         ],
         "title": "LocationsIndexPageCreateSchema",
         "type": "object"
+      },
+      "PageCreateUnion": {
+        "description": "A union of models, discriminated by the content type in `meta.type`.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/StandardPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/HomePageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/GalleryPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/FormPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BlogPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BlogIndexPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadsIndexPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/LocationsIndexPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/LocationPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/RecipePageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/RecipeIndexPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PersonPageCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PeopleIndexPageCreateSchema"
+          }
+        ]
       },
       "PeopleIndexPageCreateMetaSchema": {
         "properties": {
@@ -15517,6 +14741,53 @@
         "title": "LocationsIndexPagePatchSchema",
         "type": "object"
       },
+      "PageUpdateUnion": {
+        "description": "A union of models, discriminated by the content type in `meta.type`.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/StandardPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/HomePagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/GalleryPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/FormPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BlogPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BlogIndexPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadsIndexPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/LocationsIndexPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/LocationPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/RecipePagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/RecipeIndexPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PersonPagePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PeopleIndexPagePatchSchema"
+          }
+        ]
+      },
       "PeopleIndexPagePatchMetaSchema": {
         "properties": {
           "type": {
@@ -16540,55 +15811,7 @@
             "$ref": "#/components/schemas/ContentTypeSchema"
           },
           "content_object": {
-            "description": "A union of models, discriminated by the content type in `meta.type`.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/PageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/StandardPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/HomePageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/GalleryPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/FormPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/BlogPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/BlogIndexPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/BreadPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/BreadsIndexPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/LocationsIndexPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/LocationPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/RecipePageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/RecipeIndexPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/PersonPageSchema"
-              },
-              {
-                "$ref": "#/components/schemas/PeopleIndexPageSchema"
-              }
-            ],
-            "title": "Content Object"
+            "$ref": "#/components/schemas/PageDetailUnion"
           }
         },
         "required": [
@@ -17684,58 +16907,11 @@
         "title": "FooterTextSchema",
         "type": "object"
       },
-      "PagedAnnotated": {
+      "PagedSnippetDetailUnion": {
         "properties": {
           "items": {
             "items": {
-              "description": "A union of models, discriminated by the content type in `meta.type`.",
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/PageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/StandardPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/HomePageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/GalleryPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/FormPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/BlogPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/BlogIndexPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/BreadPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/BreadsIndexPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/LocationsIndexPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/LocationPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/RecipePageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/RecipeIndexPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/PersonPageSchema"
-                },
-                {
-                  "$ref": "#/components/schemas/PeopleIndexPageSchema"
-                }
-              ]
+              "$ref": "#/components/schemas/SnippetDetailUnion"
             },
             "title": "Items",
             "type": "array"
@@ -17749,7 +16925,7 @@
           "items",
           "count"
         ],
-        "title": "PagedAnnotated",
+        "title": "PagedSnippetDetailUnion",
         "type": "object"
       },
       "PersonMetaSchema": {
@@ -17876,6 +17052,23 @@
         ],
         "title": "PersonSchema",
         "type": "object"
+      },
+      "SnippetDetailUnion": {
+        "description": "A union of models, discriminated by the content type in `meta.type`.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/BreadIngredientSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadTypeSchema"
+          },
+          {
+            "$ref": "#/components/schemas/FooterTextSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PersonSchema"
+          }
+        ]
       },
       "BreadIngredientCreateMetaSchema": {
         "properties": {
@@ -18061,6 +17254,23 @@
         "title": "PersonCreateSchema",
         "type": "object"
       },
+      "SnippetCreateUnion": {
+        "description": "A union of models, discriminated by the content type in `meta.type`.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/BreadIngredientCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadTypeCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/FooterTextCreateSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PersonCreateSchema"
+          }
+        ]
+      },
       "BreadIngredientPatchMetaSchema": {
         "properties": {
           "type": {
@@ -18245,6 +17455,40 @@
         "title": "PersonPatchSchema",
         "type": "object"
       },
+      "SnippetUpdateUnion": {
+        "description": "A union of models, discriminated by the content type in `meta.type`.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/BreadIngredientPatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadTypePatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/FooterTextPatchSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PersonPatchSchema"
+          }
+        ]
+      },
+      "RevisionMixinSnippetDetailUnion": {
+        "description": "A union of models, discriminated by the content type in `meta.type`.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/BreadIngredientSchema"
+          },
+          {
+            "$ref": "#/components/schemas/BreadTypeSchema"
+          },
+          {
+            "$ref": "#/components/schemas/FooterTextSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PersonSchema"
+          }
+        ]
+      },
       "SnippetRevisionDetailSchema": {
         "properties": {
           "meta": {
@@ -18305,22 +17549,7 @@
             "$ref": "#/components/schemas/ContentTypeSchema"
           },
           "content_object": {
-            "description": "A union of models, discriminated by the content type in `meta.type`.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/BreadIngredientSchema"
-              },
-              {
-                "$ref": "#/components/schemas/BreadTypeSchema"
-              },
-              {
-                "$ref": "#/components/schemas/FooterTextSchema"
-              },
-              {
-                "$ref": "#/components/schemas/PersonSchema"
-              }
-            ],
-            "title": "Content Object"
+            "$ref": "#/components/schemas/RevisionMixinSnippetDetailUnion"
           }
         },
         "required": [
@@ -18335,6 +17564,20 @@
         ],
         "title": "SnippetRevisionDetailSchema",
         "type": "object"
+      },
+      "DraftStateMixinSnippetDetailUnion": {
+        "description": "A union of models, discriminated by the content type in `meta.type`.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/BreadIngredientSchema"
+          },
+          {
+            "$ref": "#/components/schemas/FooterTextSchema"
+          },
+          {
+            "$ref": "#/components/schemas/PersonSchema"
+          }
+        ]
       },
       "SnippetRevertSchema": {
         "properties": {
@@ -19041,6 +18284,18 @@
               }
             ],
             "title": "Created At"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The URL to redirect to, from either the redirect page (and route path) or the redirect link.",
+            "title": "Location"
           }
         },
         "required": [
@@ -19052,7 +18307,8 @@
           "redirect_page_route_path",
           "redirect_link",
           "automatically_created",
-          "created_at"
+          "created_at",
+          "location"
         ],
         "title": "RedirectSchema",
         "type": "object"
@@ -19105,6 +18361,27 @@
           "old_path"
         ],
         "title": "RedirectInputSchema",
+        "type": "object"
+      },
+      "PagedPageDetailUnion": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PageDetailUnion"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "PagedPageDetailUnion",
         "type": "object"
       }
     },

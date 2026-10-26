@@ -1,5 +1,5 @@
 import type { NextConfig } from 'next';
-import { getPath, type PageDetail, type Redirect } from './lib/wagtail';
+import type { Redirect } from './lib/wagtail';
 
 const nextConfig: NextConfig = {
   devIndicators: { position: 'top-right' },
@@ -18,19 +18,6 @@ const nextConfig: NextConfig = {
   async redirects() {
     const apiUrl = `${process.env.NEXT_PUBLIC_WAGTAIL_API_HOST}/api/v3-preview`;
 
-    // API v3 only gives the ID of a page to redirect to, unlike API v2's
-    // `location`, so the page's URL needs to be looked up separately.
-    const getDestination = async (redirect: Redirect) => {
-      if (redirect.redirect_link) return redirect.redirect_link;
-      if (!redirect.redirect_page_id) return null;
-      const response = await fetch(
-        `${apiUrl}/pages/${redirect.redirect_page_id}/`,
-      );
-      if (!response.ok) return null;
-      const page: PageDetail = await response.json();
-      return `${getPath(page.meta.html_url)}${redirect.redirect_page_route_path}`;
-    };
-
     try {
       const items: Redirect[] = [];
       let offset = 0;
@@ -45,17 +32,16 @@ const nextConfig: NextConfig = {
         offset = items.length;
       }
 
-      const redirects = await Promise.all(
-        items.map(async (redirect) => ({
+      return items
+        .filter(
+          (redirect): redirect is Redirect & { location: string } =>
+            redirect.location !== null,
+        )
+        .map((redirect) => ({
           source: redirect.old_path,
-          destination: await getDestination(redirect),
+          destination: redirect.location,
           permanent: redirect.is_permanent,
-        })),
-      );
-      return redirects.filter(
-        (redirect): redirect is typeof redirect & { destination: string } =>
-          redirect.destination !== null,
-      );
+        }));
     } catch {
       return [];
     }
