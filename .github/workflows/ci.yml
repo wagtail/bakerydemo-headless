@@ -39,6 +39,9 @@ jobs:
         working-directory: bakerydemo
       - run: uv pip install -r requirements/base.txt
         working-directory: bakerydemo
+      - name: Install Wagtail from stable/8.1.x
+        run: uv pip install "wagtail @ git+https://github.com/wagtail/wagtail.git@stable/8.1.x"
+        working-directory: bakerydemo
       - run: |
           uv run manage.py migrate --noinput
           uv run manage.py load_initial_data
