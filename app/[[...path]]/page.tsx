@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import DynamicUserbar from '@/components/DynamicUserbar';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { getPageComponent } from '@/components/pages';
-import api from '@/lib/api';
+import api, { APIError } from '@/lib/api';
 
 interface PageProps {
   params: Promise<{ path?: string[] }>;
@@ -15,11 +15,16 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { path: pathSplit = [] } = await params;
   const path = `/${pathSplit.join('/')}`;
-  const page = await api.getPage(path);
-  return {
-    title: page.meta.seo_title || page.title,
-    description: page.meta.search_description,
-  };
+  try {
+    const page = await api.getPage(path);
+    return {
+      title: page.meta.seo_title || page.title,
+      description: page.meta.search_description,
+    };
+  } catch (error) {
+    if (error instanceof APIError && error.status === 404) notFound();
+    throw error;
+  }
 }
 
 export default async function Page({ params, searchParams }: PageProps) {
@@ -41,7 +46,9 @@ export default async function Page({ params, searchParams }: PageProps) {
       </>
     );
   } catch (error) {
-    console.error(`Error fetching page for path ${path}:`, error);
+    if (!(error instanceof APIError && error.status === 404)) {
+      console.error(`Error fetching page for path ${path}:`, error);
+    }
     notFound();
   }
 }
